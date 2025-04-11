@@ -1,0 +1,45 @@
+# 项目配置文件
+paths:
+  data:
+    raw: data/raw/
+    processed: data/processed/
+  indexes:
+    vector: indexes/vector/
+    tfidf: indexes/tfidf/
+    kg: indexes/kg/
+  models:
+    embedding: models/embedding/
+    reranker: models/reranker/
+    llm: models/llm/
+
+# 模型配置
+models:
+  embedding:
+    name: bert-base
+    path: models/embedding/bce-embedding-base_v1
+  reranker:
+    name: bge-reranker
+    path: models/reranker/bge-reranker-v2-m3
+  llm:
+    name: qwen
+    path: models/llm/qwen2.5-14B
+    api_endpoint: https://dashscope.aliyuncs.com/compatible-mode/v1
+    api_key: sk-xxxx
+    model_name: qwen2.5-14b-instruct-1m
+
+# 处理参数
+processing:
+  chunk_size: 512
+  overlap_size: 30
+
+# 检索参数
+retrieval:
+  faiss_candidates: 100
+  tfidf_candidates: 100
+  total_candidates: 50
+  
+# 深度搜索参数
+deepsearch:
+  max_iterations: 5
+  growth_rate_threshold: 0.1
+  extend_query_num: 10
