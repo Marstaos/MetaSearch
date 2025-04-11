@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaSearch - 深度迭代检索增强系统</title>
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Preline UI -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8',
+                            800: '#1e40af', 900: '#1e3a8a', 950: '#172554'
+                        },
+                        secondary: { // Example secondary palette (Violet)
+                            50: '#f5f3ff', 100: '#ede9fe', 200: '#ddd6fe', 300: '#c4b5fd',
+                            400: '#a78bfa', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9',
+                            800: '#5b21b6', 900: '#4c1d95', 950: '#2e1065'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    keyframes: {
+                        'fade-in-up': {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: '1', boxShadow: '0 0 0 0 rgba(59, 130, 246, 0.4)' },
+                            '50%': { opacity: '1', boxShadow: '0 0 0 10px rgba(59, 130, 246, 0)' },
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
+                        'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .text-shadow-dark {
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            }
+        }
+        @layer components {
+            .btn {
+                @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-lg shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-900;
+            }
+            .btn-primary {
+                @apply btn bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 hover:shadow-lg transform hover:-translate-y-0.5;
+            }
+            .btn-secondary {
+                @apply btn bg-primary-100 text-primary-700 hover:bg-primary-200 dark:bg-gray-700 dark:text-primary-300 dark:hover:bg-gray-600 focus:ring-primary-500;
+            }
+            .card {
+                @apply bg-white dark:bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200/50 dark:border-gray-700/50;
+            }
+            .section-title {
+                @apply text-4xl font-bold text-gray-900 dark:text-white mb-4 md:text-5xl text-shadow dark:text-shadow-dark;
+            }
+            .section-subtitle {
+                @apply text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-12 md:text-xl;
+            }
+            .subsection-title {
+                @apply text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6;
+            }
+            .feature-card {
+                @apply flex flex-col p-6 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-800/80 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600 transform hover:-translate-y-1;
+            }
+            .feature-icon-wrapper {
+                 @apply w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-md mr-4 mb-4 sm:mb-0;
+            }
+            .flow-item {
+                @apply relative flex items-center p-4 bg-white dark:bg-gray-700 rounded-lg mb-6 border border-gray-200 dark:border-gray-600 shadow-sm;
+            }
+            .flow-item-icon {
+                @apply w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-800 dark:to-primary-900 text-primary-600 dark:text-primary-300 mr-4;
+            }
+            .flow-arrow {
+                @apply absolute left-1/2 -bottom-4 transform -translate-x-1/2 text-gray-300 dark:text-gray-500;
+            }
+            .code-block {
+                 @apply bg-gray-800 dark:bg-black/50 rounded-lg p-4 font-mono text-sm text-gray-200 dark:text-gray-300 overflow-x-auto border border-gray-700 dark:border-gray-600 shadow-inner;
+            }
+            .gradient-text {
+                 @apply text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500;
+            }
+        }
+        /* Custom scrollbar for code blocks */
+        .code-block::-webkit-scrollbar {
+            height: 8px;
+        }
+        .code-block::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        .code-block::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        .code-block::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        /* Style for the architecture flow */
+        .flow-chart-container .flow-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: calc(20px + 0.5rem); /* Center under the icon */
+            bottom: -1.5rem; /* Adjust to connect properly */
+            height: 1.5rem; /* Height of the gap */
+            width: 2px;
+            background-color: #d1d5db; /* gray-300 */
+        }
+        .dark .flow-chart-container .flow-item:not(:last-child)::after {
+            background-color: #4b5563; /* dark:gray-600 */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-800 dark:text-gray-200 font-sans antialiased">
+    <!-- Background Gradient Animation -->
+    <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-br from-primary-100 via-white to-secondary-100 dark:from-primary-950 dark:via-gray-950 dark:to-secondary-950 -z-10"></div>
+
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700/50 shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
+            <a href="#" class="flex items-center space-x-2">
+                <i class="fas fa-brain text-primary-600 dark:text-primary-400 text-3xl"></i>
+                <span class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">MetaSearch</span>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#overview" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">Overview</a>
+                <a href="#features" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">Features</a>
+                <a href="#architecture" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">Architecture</a>
+                <a href="#quickstart" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">Quick Start</a>
+                <a href="#technical" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">Technical Deep Dive</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none transition duration-150 ease-in-out">
+                    <i id="theme-toggle-dark-icon" class="fas fa-moon hidden text-lg"></i>
+                    <i id="theme-toggle-light-icon" class="fas fa-sun hidden text-lg"></i>
+                </button>
+                <a href="https://github.com/marstaos/MetaSearch" target="_blank" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition duration-150 ease-in-out">
+                    <i class="fab fa-github text-2xl"></i>
+                </a>
+                 <!-- Mobile Menu Button -->
+                <button data-hs-overlay="#mobile-menu" class="md:hidden p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="hs-overlay hs-overlay-open:translate-x-0 hidden -translate-x-full fixed top-0 left-0 transition-all duration-300 transform h-full max-w-xs w-full z-[60] bg-white dark:bg-gray-800 border-r dark:border-gray-700" tabindex="-1">
+        <div class="flex justify-between items-center py-4 px-4 border-b dark:border-gray-700">
+            <span class="text-xl font-bold text-gray-900 dark:text-white">Menu</span>
+            <button type="button" class="hs-overlay-close inline-flex justify-center items-center w-8 h-8 text-sm font-semibold rounded-full border border-transparent text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#mobile-menu">
+                <span class="sr-only">Close modal</span>
+                <svg class="w-3.5 h-3.5" width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.258206 1.00652C0.351976 0.912791 0.479126 0.860131 0.611706 0.860131C0.744296 0.860131 0.871447 0.912791 0.965207 1.00652L3.61171 3.65302L6.25822 1.00652C6.30432 0.958771 6.35952 0.920671 6.42052 0.894471C6.48152 0.868271 6.54712 0.854471 6.61352 0.853901C6.67992 0.853321 6.74572 0.865971 6.80722 0.891111C6.86862 0.916251 6.92442 0.953381 6.97142 1.00032C7.01832 1.04727 7.05552 1.1031 7.08062 1.16454C7.10572 1.22599 7.11842 1.29183 7.11782 1.35822C7.11722 1.42461 7.10342 1.49022 7.07722 1.55122C7.05102 1.61222 7.01292 1.6674 6.96522 1.71352L4.31871 4.36002L6.96522 7.00652C7.05632 7.10037 7.10672 7.22708 7.10552 7.35818C7.10442 7.48928 7.05182 7.61468 6.95912 7.70738C6.86642 7.80018 6.74102 7.85268 6.60992 7.85388C6.47882 7.85498 6.35212 7.80458 6.25822 7.71352L3.61171 5.06702L0.965207 7.71352C0.871447 7.80725 0.744296 7.85991 0.611706 7.85991C0.479116 7.85991 0.351966 7.80725 0.258206 7.71352C0.164476 7.61976 0.111816 7.4926 0.111816 7.36002C0.111816 7.22744 0.164476 7.10028 0.258206 7.00652L2.90471 4.36002L0.258206 1.71352C0.164476 1.61976 0.111816 1.4926 0.111816 1.36002C0.111816 1.22744 0.164476 1.10028 0.258206 1.00652Z" fill="currentColor"/>
+                </svg>
+            </button>
+        </div>
+        <div class="p-4 flex flex-col space-y-4">
+            <a href="#overview" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">Overview</a>
+            <a href="#features" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">Features</a>
+            <a href="#architecture" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">Architecture</a>
+            <a href="#quickstart" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">Quick Start</a>
+            <a href="#technical" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">Technical Deep Dive</a>
+        </div>
+    </div>
+
+    <!-- 英雄区域 -->
+    <section class="relative overflow-hidden pt-24 pb-32 md:pt-32 md:pb-40">
+        <!-- Animated Grid Background -->
+        <div class="absolute inset-0 -z-10 h-full w-full bg-white dark:bg-gray-950 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:48px_48px]"></div>
+        <!-- Glowing Shapes -->
+        <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-primary-300 dark:bg-primary-700 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-2xl opacity-30 animate-pulse-glow animation-delay-200 -z-10"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-40 h-40 bg-secondary-300 dark:bg-secondary-700 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-3xl opacity-30 animate-pulse-glow animation-delay-400 -z-10"></div>
+
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 animate-fade-in-up text-shadow dark:text-shadow-dark">
+                    <span class="gradient-text">MetaSearch</span>
+                </h1>
+                <p class="text-2xl md:text-3xl font-semibold text-gray-700 dark:text-gray-200 mb-8 opacity-0 animate-fade-in-up" style="animation-delay: 0.2s;">深度迭代检索增强系统</p>
+                <p class="text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto opacity-0 animate-fade-in-up" style="animation-delay: 0.4s;">
+                    一个教学项目，带你从零开始，利用大语言模型构建一套融合多种先进技术的RAG系统，体验智能信息探索的魅力。
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 opacity-0 animate-fade-in-up" style="animation-delay: 0.6s;">
+                    <a href="#quickstart" class="btn-primary">
+                        <i class="fas fa-rocket mr-2"></i> Get Started
+                    </a>
+                    <a href="https://github.com/marstaos/MetaSearch" target="_blank" class="btn-secondary">
+                        <i class="fab fa-github mr-2"></i> View on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 概述部分 -->
+    <section id="overview" class="py-20 md:py-28 bg-white dark:bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center" data-aos="fade-up">
+                <h2 class="section-title">What is MetaSearch?</h2>
+                <p class="section-subtitle">
+                    MetaSearch is an advanced Retrieval-Augmented Generation (RAG) system built upon the principle of deep iterative retrieval. It progressively refines searches, integrates multiple retrieval techniques, and leverages Large Language Models (LLMs) to provide comprehensive and contextually rich answers.
+                </p>
+            </div>
+        </div>
+    </section>
+
+     <!-- 特性部分 -->
+    <section id="features" class="py-20 md:py-28">
+         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-center mb-16" data-aos="fade-up">Key Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center mb-4">
+                         <div class="feature-icon-wrapper">
+                            <i class="fas fa-layer-group text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">Modular RAG Framework</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">Learn best practices for building LLM projects with a clean, modular architecture following community standards.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center mb-4">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-sync-alt text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">Deep Iterative Retrieval</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">Implements cutting-edge RAG algorithms, exploring information deeply through multiple search iterations.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                     <div class="flex flex-col sm:flex-row items-start sm:items-center mb-4">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-cubes text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">Hybrid Retrieval Fusion</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">Combines vector search, keyword search (TF-IDF), and knowledge graph retrieval for broader coverage.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                     <div class="flex flex-col sm:flex-row items-start sm:items-center mb-4">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-lightbulb text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">Intelligent Query Expansion</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">Dynamically generates sub-queries using LLMs to achieve greater breadth and depth in knowledge exploration.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                     <div class="flex flex-col sm:flex-row items-start sm:items-center mb-4">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-chart-line text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">Adaptive Search Control</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">Decides whether to continue searching based on the ratio of newly discovered information, optimizing efficiency.</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center mb-4">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-sort-amount-up text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">Diversity Re-ranking</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">Utilizes Maximal Marginal Relevance (MMR) to balance relevance and diversity, providing more comprehensive results.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 系统架构 -->
+    <section id="architecture" class="py-20 md:py-28 bg-gradient-to-b from-gray-100 to-white dark:from-gray-900 dark:to-gray-950">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-center mb-16" data-aos="fade-up">System Architecture</h2>
+            <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+
+                <!-- Core Modules -->
+                <div data-aos="fade-right">
+                    <h3 class="subsection-title text-center lg:text-left">Core Components</h3>
+                    <div class="space-y-6">
+                        <div class="card p-6 flex items-start space-x-4 hover:border-primary-300 dark:hover:border-primary-700">
+                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300">
+                                <i class="fas fa-file-alt text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">Document Processing</h4>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Splits raw documents into manageable text chunks with context and summaries.</p>
+                            </div>
+                        </div>
+                         <div class="card p-6 flex items-start space-x-4 hover:border-primary-300 dark:hover:border-primary-700">
+                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300">
+                               <i class="fas fa-database text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">Index Construction</h4>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Builds Vector, TF-IDF, and Knowledge Graph indexes for efficient retrieval.</p>
+                            </div>
+                        </div>
+                         <div class="card p-6 flex items-start space-x-4 hover:border-primary-300 dark:hover:border-primary-700">
+                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300">
+                                <i class="fas fa-search-plus text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">Retrieval Module</h4>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Combines multiple retrieval methods (vector, keyword, graph) to find relevant documents.</p>
+                            </div>
+                        </div>
+                         <div class="card p-6 flex items-start space-x-4 hover:border-primary-300 dark:hover:border-primary-700">
+                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300">
+                                <i class="fas fa-code-branch text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">Query Expansion</h4>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Generates new sub-queries based on retrieved information using LLMs.</p>
+                            </div>
+                        </div>
+                         <div class="card p-6 flex items-start space-x-4 hover:border-primary-300 dark:hover:border-primary-700">
+                            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300">
+                                <i class="fas fa-robot text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">Deep RAG Orchestrator</h4>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Coordinates the iterative retrieval process and synthesizes the final answer.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workflow -->
+                 <div data-aos="fade-left" data-aos-delay="100">
+                    <h3 class="subsection-title text-center lg:text-left">Workflow</h3>
+                    <div class="card p-8">
+                        <div class="flow-chart-container relative">
+                            <div class="flow-item">
+                                <div class="flow-item-icon"><i class="fas fa-user text-lg"></i></div>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">User Query Input</span>
+                            </div>
+                             <div class="flow-item">
+                                <div class="flow-item-icon"><i class="fas fa-search text-lg"></i></div>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">Initial Retrieval (Hybrid)</span>
+                            </div>
+                            <div class="flow-item">
+                                <div class="flow-item-icon"><i class="fas fa-lightbulb text-lg"></i></div>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">Generate Sub-queries (LLM)</span>
+                             </div>
+                             <div class="flow-item">
+                                <div class="flow-item-icon"><i class="fas fa-sync-alt text-lg"></i></div>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">Iterative Retrieval & Expansion</span>
+                             </div>
+                             <div class="flow-item">
+                                <div class="flow-item-icon"><i class="fas fa-sort-amount-up text-lg"></i></div>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">Re-rank & Synthesize</span>
+                            </div>
+                            <div class="flow-item">
+                                <div class="flow-item-icon"><i class="fas fa-comment-dots text-lg"></i></div>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">Generate Final Answer (LLM)</span>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Directory Structure -->
+            <div class="max-w-4xl mx-auto mt-16" data-aos="fade-up">
+                 <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Project Directory Structure</h3>
+                    <div class="code-block">
+                        <pre><code>MetaSearch/
+├── config/           # Configuration files (YAML)
+├── data/             # Data directory (raw, processed, indexes)
+│   ├── raw/
+│   ├── processed/
+│   └── indexes/
+├── deepsearch/       # Core library code
+│   ├── indexing/     # Indexing logic (vector, tfidf, graph)
+│   ├── llm/          # LLM interface wrappers
+│   ├── preprocessing/# Document parsing and chunking
+│   ├── rag/          # RAG pipeline implementation (standard, deep)
+│   ├── retrieval/    # Retrieval strategies and re-ranking
+│   └── utils/        # Utility functions
+├── scripts/          # Helper scripts (downloading, processing)
+├── app.py            # Main application entry point
+├── requirements.txt  # Project dependencies
+└── README.md         # Project documentation</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 快速开始 -->
+    <section id="quickstart" class="py-20 md:py-28">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-center mb-16" data-aos="fade-up">Quick Start Guide</h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="hs-accordion-group space-y-6">
+                    <!-- Step 1: Environment Setup -->
+                    <div class="hs-accordion bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700" id="quickstart-accordion-1" data-aos="fade-up">
+                        <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-4 px-6 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 dark:text-gray-200 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="quickstart-collapse-1">
+                             <span class="flex items-center">
+                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300 mr-3 text-sm font-bold">1</span>
+                                Environment Setup
+                            </span>
+                            <svg class="hs-accordion-active:hidden block w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                            <svg class="hs-accordion-active:block hidden w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                        </button>
+                        <div id="quickstart-collapse-1" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="quickstart-accordion-1">
+                            <div class="px-6 pb-4">
+                                <div class="code-block mb-4">
+                                    <pre><code class="language-bash"># Create and activate conda environment
+conda create -n metasearch python=3.10 -y
+conda activate metasearch
+
+# Install dependencies (CUDA 11.8 recommended)
+pip install -r requirements.txt
+# For CUDA 11.8 support:
+pip install torch==2.0.1+cu118 --extra-index-url https://download.pytorch.org/whl/cu118</code></pre>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">Edit <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">config/config.yaml</code> to set model paths, API keys, etc.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Model Download -->
+                    <div class="hs-accordion bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700" id="quickstart-accordion-2" data-aos="fade-up">
+                        <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-4 px-6 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 dark:text-gray-200 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="quickstart-collapse-2">
+                           <span class="flex items-center">
+                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300 mr-3 text-sm font-bold">2</span>
+                                Download Models
+                            </span>
+                            <svg class="hs-accordion-active:hidden block w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                            <svg class="hs-accordion-active:block hidden w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                        </button>
+                        <div id="quickstart-collapse-2" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="quickstart-accordion-2">
+                            <div class="px-6 pb-4">
+                                <div class="code-block">
+                                    <pre><code class="language-bash"># Recommended: Download Embedding and Reranker models (~2.3GB)
+python scripts/download_models.py --embedding --reranker
+
+# Optional: Download generation model (e.g., Qwen, requires more resources)
+# python scripts/download_models.py --llm qwen
+
+# Or, download all configured models
+# python scripts/download_models.py --all</code></pre>
+                                </div>
+                                 <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">Ensure model paths in <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">config.yaml</code> match download locations.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Step 3: Process Documents -->
+                    <div class="hs-accordion bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700" id="quickstart-accordion-3" data-aos="fade-up">
+                        <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-4 px-6 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 dark:text-gray-200 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="quickstart-collapse-3">
+                            <span class="flex items-center">
+                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300 mr-3 text-sm font-bold">3</span>
+                                Process Your Documents
+                            </span>
+                            <svg class="hs-accordion-active:hidden block w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                            <svg class="hs-accordion-active:block hidden w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                        </button>
+                        <div id="quickstart-collapse-3" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="quickstart-accordion-3">
+                            <div class="px-6 pb-4">
+                                <p class="text-gray-600 dark:text-gray-300 text-sm mb-3">Place your documents (e.g., .txt, .md, .pdf) into the <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">data/raw/</code> directory.</p>
+                                <div class="code-block">
+                                    <pre><code class="language-bash"># Process a single file
+python scripts/process_documents.py --file data/raw/your_document.pdf
+
+# Process all files in the raw directory
+python scripts/process_documents.py --dir data/raw/</code></pre>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">Processed chunks will be saved in <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">data/processed/</code>.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Build Indexes -->
+                    <div class="hs-accordion bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700" id="quickstart-accordion-4" data-aos="fade-up">
+                        <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-4 px-6 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 dark:text-gray-200 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="quickstart-collapse-4">
+                            <span class="flex items-center">
+                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300 mr-3 text-sm font-bold">4</span>
+                                Build Indexes
+                            </span>
+                            <svg class="hs-accordion-active:hidden block w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                            <svg class="hs-accordion-active:block hidden w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                        </button>
+                        <div id="quickstart-collapse-4" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="quickstart-accordion-4">
+                            <div class="px-6 pb-4">
+                                <div class="code-block">
+                                    <pre><code class="language-bash"># Build all configured indexes using the default processed chunk file
+python scripts/build_indexes.py --chunks data/processed/index_chunk.pkl</code></pre>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">Indexes (FAISS, TF-IDF, etc.) will be saved in <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">data/indexes/</code>.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Run the System -->
+                    <div class="hs-accordion bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700" id="quickstart-accordion-5" data-aos="fade-up">
+                        <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-4 px-6 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 dark:text-gray-200 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="quickstart-collapse-5">
+                           <span class="flex items-center">
+                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300 mr-3 text-sm font-bold">5</span>
+                                Launch MetaSearch
+                            </span>
+                            <svg class="hs-accordion-active:hidden block w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                            <svg class="hs-accordion-active:block hidden w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                        </button>
+                        <div id="quickstart-collapse-5" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="quickstart-accordion-5">
+                            <div class="px-6 pb-4 space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">Interactive Mode:</h4>
+                                    <div class="code-block">
+                                        <pre><code class="language-bash">python app.py --interactive</code></pre>
+                                    </div>
+                                    <p class="text-gray-600 dark:text-gray-400 text-xs mt-1">Start a chat-like interface in your terminal.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">Single Query:</h4>
+                                    <div class="code-block">
+                                        <pre><code class="language-bash">python app.py --query "What was the role of the Grand Secretariat in the Ming Dynasty?"</code></pre>
+                                    </div>
+                                     <p class="text-gray-600 dark:text-gray-400 text-xs mt-1">Run a single query and print the result.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术详情 -->
+    <section id="technical" class="py-20 md:py-28 bg-gradient-to-b from-gray-100 to-white dark:from-gray-900 dark:to-gray-950">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-center mb-16" data-aos="fade-up">Technical Deep Dive</h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
+                <!-- Document Processing -->
+                <div class="card p-6" data-aos="fade-right">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-secondary-400 to-secondary-500 text-white mr-3"> <i class="fas fa-cogs"></i> </div>
+                        <h3 class="text-xl font-semibold">Document Processing & Chunking</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Raw documents are parsed and split into overlapping chunks. Each chunk stores:
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400 mb-4 text-sm">
+                        <li><code class="text-xs">content</code>: The main text of the chunk.</li>
+                        <li><code class="text-xs">chunk_id</code>: A unique identifier.</li>
+                        <li><code class="text-xs">parent_content</code>: Optional larger context block.</li>
+                        <li><code class="text-xs">abstract</code>: LLM-generated summary (optional).</li>
+                        <li>Metadata: Source document, page number, etc.</li>
+                    </ul>
+                    <div class="code-block text-xs">
+                        <pre><code># Example config (config/config.yaml)
+processing:
+  chunk_size: 512      # Target size for each chunk
+  overlap_size: 64     # Overlap between consecutive chunks
+  generate_abstract: true # Whether to generate summaries</code></pre>
+                    </div>
+                </div>
+
+                 <!-- Multi-modal Indexing -->
+                <div class="card p-6" data-aos="fade-left" data-aos-delay="100">
+                    <div class="flex items-center mb-4">
+                         <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-secondary-400 to-secondary-500 text-white mr-3"> <i class="fas fa-sitemap"></i> </div>
+                        <h3 class="text-xl font-semibold">Hybrid Indexing</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Multiple indexes capture different aspects of the data:
+                    </p>
+                    <ol class="list-decimal list-inside space-y-3 text-gray-600 dark:text-gray-400 text-sm">
+                        <li><strong class="text-gray-700 dark:text-gray-200">Vector Index (FAISS):</strong> Uses embeddings (e.g., BCE-Embedding) for semantic similarity search.</li>
+                        <li><strong class="text-gray-700 dark:text-gray-200">TF-IDF Index:</strong> Classic keyword-based retrieval, good for specific terms.</li>
+                        <li><strong class="text-gray-700 dark:text-gray-200">Knowledge Graph (Optional):</strong> Extracts entities and relationships for structured queries.</li>
+                    </ol>
+                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-4">The retrieval module fuses results from enabled indexes.</p>
+                </div>
+
+                <!-- Query Expansion -->
+                <div class="card p-6" data-aos="fade-right" data-aos-delay="200">
+                    <div class="flex items-center mb-4">
+                         <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-secondary-400 to-secondary-500 text-white mr-3"> <i class="fas fa-search-location"></i> </div>
+                        <h3 class="text-xl font-semibold">Query Expansion Mechanism</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        Expands search scope iteratively:
+                    </p>
+                    <ol class="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-400 text-sm">
+                        <li>LLM extracts key search terms/sub-questions from retrieved results.</li>
+                        <li>Calculate relevance score of potential sub-queries against the original query.</li>
+                        <li>Pool all candidate sub-queries across iterations.</li>
+                        <li>Select top-k scoring sub-queries based on relevance and potential for new information.</li>
+                        <li>These become inputs for the next retrieval iteration.</li>
+                    </ol>
+                </div>
+
+                <!-- Deep Iterative Retrieval -->
+                <div class="card p-6" data-aos="fade-left" data-aos-delay="300">
+                    <div class="flex items-center mb-4">
+                         <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-secondary-400 to-secondary-500 text-white mr-3"> <i class="fas fa-project-diagram"></i> </div>
+                        <h3 class="text-xl font-semibold">Deep Iterative Retrieval Loop</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        The core engine operates in a loop:
+                    </p>
+                    <ol class="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-400 mb-4 text-sm">
+                        <li>Start with the initial user query.</li>
+                        <li>Perform standard RAG (retrieve, re-rank, generate response snippet).</li>
+                        <li>Calculate Information Growth Rate (IGR): `len(new_chunk_ids) / len(existing_chunk_ids)`.</li>
+                        <li>If IGR < threshold or max iterations reached, stop.</li>
+                        <li>Else, use Query Expansion to generate new sub-queries for the next loop.</li>
+                        <li>Finally, synthesize all gathered knowledge into a final, comprehensive answer.</li>
+                    </ol>
+                     <div class="code-block text-xs">
+                        <pre><code># Example config (config/config.yaml)
+deepsearch:
+  max_iterations: 3          # Max number of retrieval loops
+  growth_rate_threshold: 0.1 # Stop if less than 10% new info found
+  extend_query_num: 3        # Number of sub-queries per iteration</code></pre>
+                    </div>
+                </div>
+            </div>
+
+             <!-- 流程示例 -->
+            <div class="max-w-4xl mx-auto mt-16" data-aos="fade-up">
+                <div class="card p-8">
+                    <h3 class="subsection-title text-center mb-8">Example Workflow: "Ming Dynasty Cabinet System"</h3>
+                    <div class="space-y-8">
+                        <!-- Iteration 1 -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700/50 shadow-sm">
+                            <h4 class="font-semibold text-lg text-primary-600 dark:text-primary-400 mb-3">Iteration 1</h4>
+                            <ol class="list-decimal list-inside space-y-3 text-gray-600 dark:text-gray-300 text-sm">
+                                <li>
+                                    <strong class="text-gray-700 dark:text-gray-200">Input Query:</strong> "Ming Dynasty Cabinet System"
+                                    <ul class="list-disc list-inside ml-6 mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                        <li>Initial knowledge: Empty</li>
+                                        <li>Existing chunk IDs: Empty set</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong class="text-gray-700 dark:text-gray-200">Standard RAG Execution:</strong>
+                                    <ul class="list-disc list-inside ml-6 mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                        <li>Retrieve relevant chunks (e.g., IDs: {101, 102, 103, 104, 105}).</li>
+                                        <li>Generate initial response snippet: "The Ming Cabinet originated during the Yongle era..."</li>
+                                        <li>Add snippet to knowledge base.</li>
+                                        <li>Update existing IDs: {101, 102, 103, 104, 105}</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong class="text-gray-700 dark:text-gray-200">Calculate IGR:</strong> 5 (new) / 1 (total, conceptually) = 5.0. Since 5.0 > 0.1 (threshold), continue.
+                                </li>
+                                <li>
+                                    <strong class="text-gray-700 dark:text-gray-200">Expand Query:</strong>
+                                    <ul class="list-disc list-inside ml-6 mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                        <li>LLM analyzes snippet, suggests sub-queries: ["Grand Secretaries", "Cabinet powers", "Zhang Juzheng reforms", ...].</li>
+                                        <li>Select top 3 relevant sub-queries for next iteration: e.g., ["Ming Grand Secretaries", "Evolution of Ming Cabinet", "Cabinet vs Imperial Power"].</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <!-- Iteration 2 -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700/50 shadow-sm">
+                            <h4 class="font-semibold text-lg text-primary-600 dark:text-primary-400 mb-3">Iteration 2</h4>
+                            <ol class="list-decimal list-inside space-y-3 text-gray-600 dark:text-gray-300 text-sm">
+                                <li>
+                                    <strong class="text-gray-700 dark:text-gray-200">Input Queries:</strong> ["Ming Grand Secretaries", "Evolution of Ming Cabinet", "Cabinet vs Imperial Power"]
+                                </li>
+                                <li>
+                                    <strong class="text-gray-700 dark:text-gray-200">Standard RAG Execution (for each sub-query):</strong>
+                                    <ul class="list-disc list-inside ml-6 mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                        <li>Retrieve chunks for each query (e.g., new IDs discovered: {201, 202, 203, 204}).</li>
+                                        <li>Generate response snippets for each sub-query.</li>
+                                        <li>Add snippets to knowledge base.</li>
+                                        <li>Update existing IDs: {101, 102, ..., 105, 201, ..., 204} (Total: 9)</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong class="text-gray-700 dark:text-gray-200">Calculate IGR:</strong> 4 (new) / 5 (existing) = 0.8. Since 0.8 > 0.1, potentially continue (depending on max iterations).
+                                </li>
+                                <li>
+                                    <strong class="text-gray-700 dark:text-gray-200">Expand Query (if continuing):</strong> Generate and select next set of sub-queries.
+                                </li>
+                            </ol>
+                        </div>
+
+                        <!-- Final Answer Generation -->
+                         <div class="p-6 bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-gray-700 dark:to-gray-800 rounded-lg border border-primary-200 dark:border-primary-700 shadow-md">
+                            <h4 class="font-semibold text-lg text-primary-700 dark:text-primary-300 mb-3"><i class="fas fa-check-circle mr-2"></i>Final Answer Synthesis</h4>
+                            <ol class="list-decimal list-inside space-y-3 text-gray-600 dark:text-gray-300 text-sm">
+                                <li>
+                                    <strong class="text-gray-700 dark:text-gray-200">Aggregate & Format Knowledge:</strong>
+                                    <ul class="list-disc list-inside ml-6 mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                        <li>Collect all generated response snippets from all iterations.</li>
+                                        <li>Re-rank all gathered chunks/snippets based on relevance to the *original* query using a re-ranking model.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong class="text-gray-700 dark:text-gray-200">Generate Comprehensive Answer:</strong>
+                                    <ul class="list-disc list-inside ml-6 mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                        <li>Construct a final prompt including the original query and the ranked, aggregated knowledge.</li>
+                                        <li>Use the LLM to generate a coherent, structured final answer incorporating the diverse information gathered.</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学习路径 -->
+    <section id="learning" class="py-20 md:py-28">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-center mb-16" data-aos="fade-up">Suggested Learning Path</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="card p-8" data-aos="fade-right">
+                    <div class="flex items-center mb-6">
+                         <div class="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-500 text-white mr-4"><i class="fas fa-seedling text-xl"></i></div>
+                         <h3 class="subsection-title !mb-0">Beginner Path</h3>
+                    </div>
+                    <ol class="list-decimal list-inside space-y-3 text-gray-600 dark:text-gray-300 text-sm">
+                        <li>Run the system (<code class="text-xs">app.py --interactive</code>) to see it in action.</li>
+                        <li>Read <code class="text-xs">app.py</code>: Understand initialization and the main RAG call.</li>
+                        <li>Explore <code class="text-xs">deepsearch/preprocessing/</code>: How are documents loaded and chunked?</li>
+                        <li>Study <code class="text-xs">deepsearch/indexing/vector_index.py</code>: Basic vector index creation and search.</li>
+                        <li>Look at <code class="text-xs">deepsearch/llm/</code>: How does the code interface with LLMs (local or API)?</li>
+                        <li>Examine <code class="text-xs">deepsearch/rag/standard_rag.py</code>: The basic retrieve-then-generate pipeline.</li>
+                    </ol>
+                </div>
+
+                <div class="card p-8" data-aos="fade-left" data-aos-delay="100">
+                     <div class="flex items-center mb-6">
+                         <div class="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-blue-500 text-white mr-4"><i class="fas fa-graduation-cap text-xl"></i></div>
+                         <h3 class="subsection-title !mb-0">Advanced Path</h3>
+                    </div>
+                    <ol class="list-decimal list-inside space-y-3 text-gray-600 dark:text-gray-300 text-sm">
+                        <li>Dive into <code class="text-xs">deepsearch/rag/deep_rag.py</code>: Understand the iterative loop, IGR, and query expansion logic.</li>
+                        <li>Study <code class="text-xs">deepsearch/retrieval/</code>: Explore hybrid retrieval and MMR re-ranking.</li>
+                        <li>Compare different index implementations in <code class="text-xs">deepsearch/indexing/</code>.</li>
+                        <li>Analyze the query expansion implementation in <code class="text-xs">deepsearch/rag/query_expansion.py</code>.</li>
+                        <li>Experiment with <code class="text-xs">config/config.yaml</code> parameters (iterations, thresholds, models) and observe changes.</li>
+                        <li>Try adding a new document type parser or a custom retrieval strategy.</li>
+                    </ol>
+                </div>
+            </div>
+
+             <!-- FAQ -->
+            <div class="max-w-4xl mx-auto mt-16" data-aos="fade-up">
+                 <h3 class="subsection-title text-center mb-8">Frequently Asked Questions</h3>
+                 <div class="hs-accordion-group space-y-4">
+                     <div class="hs-accordion bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700" id="faq-1">
+                        <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-3 px-5 inline-flex items-center justify-between gap-x-3 w-full font-medium text-left text-gray-700 dark:text-gray-300 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="faq-collapse-1">
+                             Why use multiple index types?
+                            <svg class="hs-accordion-active:hidden block w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                            <svg class="hs-accordion-active:block hidden w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                        </button>
+                        <div id="faq-collapse-1" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="faq-1">
+                            <p class="text-gray-600 dark:text-gray-400 p-5 text-sm">Different indexes excel at different tasks. Vector indexes find semantic similarity, TF-IDF matches exact keywords, and Knowledge Graphs capture structured relationships. Combining them (hybrid retrieval) provides more robust results.</p>
+                        </div>
+                    </div>
+                     <div class="hs-accordion bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700" id="faq-2">
+                        <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-3 px-5 inline-flex items-center justify-between gap-x-3 w-full font-medium text-left text-gray-700 dark:text-gray-300 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="faq-collapse-2">
+                             How is Information Growth Rate (IGR) calculated?
+                            <svg class="hs-accordion-active:hidden block w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                            <svg class="hs-accordion-active:block hidden w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                        </button>
+                        <div id="faq-collapse-2" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="faq-2">
+                            <p class="text-gray-600 dark:text-gray-400 p-5 text-sm">It's the ratio of newly discovered unique document chunk IDs in the current iteration compared to the total unique chunk IDs found in all previous iterations. A high ratio means the search is still finding significantly new information.</p>
+                        </div>
+                    </div>
+                     <div class="hs-accordion bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700" id="faq-3">
+                        <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-3 px-5 inline-flex items-center justify-between gap-x-3 w-full font-medium text-left text-gray-700 dark:text-gray-300 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="faq-collapse-3">
+                             How to balance performance vs. result quality?
+                            <svg class="hs-accordion-active:hidden block w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                            <svg class="hs-accordion-active:block hidden w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                        </button>
+                        <div id="faq-collapse-3" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="faq-3">
+                            <p class="text-gray-600 dark:text-gray-400 p-5 text-sm">Adjust parameters in <code class="text-xs">config/config.yaml</code>:
+                            <ul class="list-disc list-inside ml-4 mt-2 space-y-1">
+                                <li><code class="text-xs">deepsearch.max_iterations</code>: Fewer iterations = faster, potentially less thorough.</li>
+                                <li><code class="text-xs">deepsearch.growth_rate_threshold</code>: Higher threshold = stops earlier, faster.</li>
+                                <li><code class="text-xs">retrieval.top_k</code>: Retrieve fewer documents per step = faster.</li>
+                                <li>Choice of models (smaller models are faster).</li>
+                            </ul>
+                            </p>
+                        </div>
+                    </div>
+                     <div class="hs-accordion bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700" id="faq-4">
+                        <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-3 px-5 inline-flex items-center justify-between gap-x-3 w-full font-medium text-left text-gray-700 dark:text-gray-300 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="faq-collapse-4">
+                             How to add support for a new document type (e.g., .docx)?
+                            <svg class="hs-accordion-active:hidden block w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                            <svg class="hs-accordion-active:block hidden w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                        </button>
+                        <div id="faq-collapse-4" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="faq-4">
+                            <p class="text-gray-600 dark:text-gray-400 p-5 text-sm">You would typically need to:
+                            <ol class="list-decimal list-inside ml-4 mt-2 space-y-1">
+                                <li>Install a library to parse .docx files (e.g., <code class="text-xs">python-docx</code>).</li>
+                                <li>Add a new loading function in <code class="text-xs">deepsearch/preprocessing/loading.py</code> for the '.docx' extension.</li>
+                                <li>Ensure the output format matches what the chunking functions expect (usually plain text content and optional metadata).</li>
+                            </ol>
+                            </p>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 社区贡献 -->
+    <section id="community" class="py-20 md:py-28 bg-gradient-to-b from-primary-50 to-white dark:from-primary-950 dark:to-gray-950">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title text-center" data-aos="fade-up">Join the Community</h2>
+            <p class="section-subtitle text-center" data-aos="fade-up" data-aos-delay="100">
+                MetaSearch is an open-source educational project. Contributions of all kinds are welcome!
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="card p-8 text-center transform hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="200">
+                     <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-full bg-gradient-to-br from-red-100 to-red-200 dark:from-red-800 dark:to-red-900 text-red-600 dark:text-red-300 shadow-lg">
+                        <i class="fas fa-bug text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Found a Bug?</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 text-sm">Help improve the project by reporting issues you encounter.</p>
+                    <a href="https://github.com/marstaos/MetaSearch/issues/new" target="_blank" class="btn btn-secondary !bg-red-100 !text-red-700 hover:!bg-red-200 dark:!bg-red-900/50 dark:!text-red-300 dark:hover:!bg-red-800/70 text-sm py-2 px-4">
+                       <i class="fas fa-exclamation-circle mr-2"></i> Report Issue
+                    </a>
+                </div>
+
+                <div class="card p-8 text-center transform hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="300">
+                     <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-full bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-800 dark:to-yellow-900 text-yellow-600 dark:text-yellow-300 shadow-lg">
+                        <i class="fas fa-lightbulb text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Have an Idea?</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 text-sm">Share your innovations and improvements by contributing code.</p>
+                    <a href="https://github.com/marstaos/MetaSearch/pulls" target="_blank" class="btn btn-secondary !bg-yellow-100 !text-yellow-700 hover:!bg-yellow-200 dark:!bg-yellow-900/50 dark:!text-yellow-300 dark:hover:!bg-yellow-800/70 text-sm py-2 px-4">
+                        <i class="fas fa-code-branch mr-2"></i> Submit Pull Request
+                    </a>
+                </div>
+
+                <div class="card p-8 text-center transform hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-full bg-gradient-to-br from-green-100 to-green-200 dark:from-green-800 dark:to-green-900 text-green-600 dark:text-green-300 shadow-lg">
+                        <i class="fas fa-star text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Like the Project?</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 text-sm">Show your support and help others discover it by giving us a star!</p>
+                     <a href="https://github.com/marstaos/MetaSearch" target="_blank" class="btn btn-secondary !bg-green-100 !text-green-700 hover:!bg-green-200 dark:!bg-green-900/50 dark:!text-green-300 dark:hover:!bg-green-800/70 text-sm py-2 px-4">
+                       <i class="fas fa-star mr-2"></i> Star on GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center mt-16" data-aos="fade-up">
+                <p class="text-xl font-semibold gradient-text">
+                    Your Forks and PRs are welcome! ✨
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 dark:bg-black/50 border-t border-gray-700 dark:border-gray-600/50 text-gray-400">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+                <div class="mb-6 md:mb-0">
+                     <a href="#" class="flex items-center justify-center md:justify-start space-x-2 mb-2">
+                        <i class="fas fa-brain text-primary-400 text-2xl"></i>
+                        <span class="text-xl font-bold text-white tracking-tight">MetaSearch</span>
+                    </a>
+                    <p class="text-sm">
+                        Deep Iterative Retrieval-Augmented Generation System
+                    </p>
+                     <p class="text-xs mt-1">An Educational Project by MaStao</p>
+                </div>
+
+                <div class="flex flex-col items-center md:items-end">
+                    <nav class="flex flex-wrap justify-center md:justify-end space-x-4 text-sm mb-4">
+                         <a href="#overview" class="hover:text-primary-400 transition">Overview</a>
+                         <a href="#features" class="hover:text-primary-400 transition">Features</a>
+                         <a href="#quickstart" class="hover:text-primary-400 transition">Quick Start</a>
+                         <a href="#technical" class="hover:text-primary-400 transition">Deep Dive</a>
+                    </nav>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="https://github.com/marstaos/MetaSearch" target="_blank" class="text-gray-400 hover:text-white transition duration-150 ease-in-out">
+                            <span class="sr-only">GitHub</span>
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <!-- Add other social links here if needed -->
+                    </div>
+                    <p class="text-xs">© 2024 MetaSearch Project. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Preline UI JS -->
+    <script src="https://cdn.jsdelivr.net/npm/preline/dist/preline.min.js"></script>
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Theme Toggle & Smooth Scroll & Animation Init -->
+    <script>
+        // AOS Animation Init
+        document.addEventListener('DOMContentLoaded', () => {
+          AOS.init({
+              duration: 800, // values from 0 to 3000, with step 50ms
+              once: false, // whether animation should happen only once - while scrolling down
+              mirror: false, // whether elements should animate out while scrolling past them
+          });
+        });
+
+        // Theme Toggle
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        const htmlElement = document.documentElement;
+
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                htmlElement.classList.add('dark');
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
+            } else {
+                htmlElement.classList.remove('dark');
+                themeToggleDarkIcon.classList.remove('hidden');
+                themeToggleLightIcon.classList.add('hidden');
+            }
+        };
+
+        const currentTheme = localStorage.getItem('color-theme') ||
+                             (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        applyTheme(currentTheme);
+
+        themeToggleBtn.addEventListener('click', function() {
+            const newTheme = htmlElement.classList.contains('dark') ? 'light' : 'dark';
+            localStorage.setItem('color-theme', newTheme);
+            applyTheme(newTheme);
+        });
+
+        // Smooth Scroll (adjusted for sticky header)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                // Ensure it's an internal link and not just '#'
+                if (href && href.startsWith('#') && href.length > 1) {
+                     e.preventDefault();
+                    const targetId = href;
+                    const targetElement = document.querySelector(targetId);
+                    const header = document.querySelector('header');
+                    const headerHeight = header ? header.offsetHeight : 80; // Estimate header height
+
+                    if (targetElement) {
+                        // Close mobile menu if open and clicked
+                        const mobileMenu = document.getElementById('mobile-menu');
+                        if (mobileMenu && mobileMenu.classList.contains('hs-overlay-open:translate-x-0')) {
+                           HSOverlay.close(mobileMenu);
+                        }
+
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+
+                        // Optional: Update URL hash without jumping
+                        // history.pushState(null, null, targetId);
+                    }
+                } else if (href === '#') {
+                    // Prevent jump for href="#" links
+                    e.preventDefault();
+                     window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Fix Preline accordions not resizing correctly after initial load/dynamic content
+        // Not strictly necessary for this static page, but good practice if content changes
+        /*
+        if (window.HSStaticMethods) {
+            setTimeout(() => { // Allow initial render
+                 HSStaticMethods.autoInit(['accordion']);
+                 // Re-evaluate accordion sizes if needed
+                 document.querySelectorAll('.hs-accordion.active').forEach(acc => {
+                     const content = document.getElementById(acc.getAttribute('aria-controls'));
+                     if (content) {
+                         content.style.height = content.scrollHeight + 'px';
+                     }
+                 });
+             }, 100);
+        }
+        */
+
+    </script>
+</body>
+</html>
