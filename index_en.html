@@ -26,14 +26,14 @@
                             400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8',
                             800: '#1e40af', 900: '#1e3a8a', 950: '#172554'
                         },
-                        secondary: { // 示例次要调色板 (紫色)
+                        secondary: { // Example secondary palette (Violet)
                             50: '#f5f3ff', 100: '#ede9fe', 200: '#ddd6fe', 300: '#c4b5fd',
                             400: '#a78bfa', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9',
                             800: '#5b21b6', 900: '#4c1d95', 950: '#2e1065'
                         }
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'], // 保持 Inter 字体优先
+                        sans: ['Inter', 'sans-serif'],
                     },
                     keyframes: {
                         'fade-in-up': {
@@ -107,7 +107,7 @@
                  @apply text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500;
             }
         }
-        /* 代码块自定义滚动条 */
+        /* Custom scrollbar for code blocks */
         .code-block::-webkit-scrollbar {
             height: 8px;
         }
@@ -122,13 +122,13 @@
         .code-block::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
-        /* 架构流程图样式 */
+        /* Style for the architecture flow */
         .flow-chart-container .flow-item:not(:last-child)::after {
             content: '';
             position: absolute;
-            left: calc(20px + 0.5rem); /* 图标下方居中 */
-            bottom: -1.5rem; /* 调整以正确连接 */
-            height: 1.5rem; /* 间隙高度 */
+            left: calc(20px + 0.5rem); /* Center under the icon */
+            bottom: -1.5rem; /* Adjust to connect properly */
+            height: 1.5rem; /* Height of the gap */
             width: 2px;
             background-color: #d1d5db; /* gray-300 */
         }
@@ -138,7 +138,7 @@
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-950 text-gray-800 dark:text-gray-200 font-sans antialiased">
-    <!-- 背景渐变动画 -->
+    <!-- Background Gradient Animation -->
     <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-br from-primary-100 via-white to-secondary-100 dark:from-primary-950 dark:via-gray-950 dark:to-secondary-950 -z-10"></div>
 
     <!-- 导航栏 -->
@@ -149,26 +149,21 @@
                 <span class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">MetaSearch</span>
             </a>
             <div class="hidden md:flex space-x-8">
-                <a href="#overview" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">概述</a>
-                <a href="#features" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">特性</a>
-                <a href="#architecture" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">架构</a>
-                <a href="#quickstart" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">快速开始</a>
-                <a href="#technical" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">技术深潜</a>
-                <a href="#learning" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">学习路径</a>
-                <a href="#community" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">社区</a>
+                <a href="#overview" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">Overview</a>
+                <a href="#features" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">Features</a>
+                <a href="#architecture" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">Architecture</a>
+                <a href="#quickstart" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">Quick Start</a>
+                <a href="#technical" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">Technical Deep Dive</a>
             </div>
             <div class="flex items-center space-x-4">
                 <button id="theme-toggle" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none transition duration-150 ease-in-out">
                     <i id="theme-toggle-dark-icon" class="fas fa-moon hidden text-lg"></i>
                     <i id="theme-toggle-light-icon" class="fas fa-sun hidden text-lg"></i>
                 </button>
-                <a href="index_en.html" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none transition duration-150 ease-in-out" title="Switch to English">
-                    <i class="fas fa-language text-lg"></i>
-                </a>
                 <a href="https://github.com/marstaos/MetaSearch" target="_blank" class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition duration-150 ease-in-out">
                     <i class="fab fa-github text-2xl"></i>
                 </a>
-                 <!-- 移动菜单按钮 -->
+                 <!-- Mobile Menu Button -->
                 <button data-hs-overlay="#mobile-menu" class="md:hidden p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
@@ -176,33 +171,31 @@
         </nav>
     </header>
 
-    <!-- 移动菜单浮层 -->
+    <!-- Mobile Menu Overlay -->
     <div id="mobile-menu" class="hs-overlay hs-overlay-open:translate-x-0 hidden -translate-x-full fixed top-0 left-0 transition-all duration-300 transform h-full max-w-xs w-full z-[60] bg-white dark:bg-gray-800 border-r dark:border-gray-700" tabindex="-1">
         <div class="flex justify-between items-center py-4 px-4 border-b dark:border-gray-700">
-            <span class="text-xl font-bold text-gray-900 dark:text-white">菜单</span>
+            <span class="text-xl font-bold text-gray-900 dark:text-white">Menu</span>
             <button type="button" class="hs-overlay-close inline-flex justify-center items-center w-8 h-8 text-sm font-semibold rounded-full border border-transparent text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" data-hs-overlay="#mobile-menu">
-                <span class="sr-only">关闭模态框</span>
+                <span class="sr-only">Close modal</span>
                 <svg class="w-3.5 h-3.5" width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0.258206 1.00652C0.351976 0.912791 0.479126 0.860131 0.611706 0.860131C0.744296 0.860131 0.871447 0.912791 0.965207 1.00652L3.61171 3.65302L6.25822 1.00652C6.30432 0.958771 6.35952 0.920671 6.42052 0.894471C6.48152 0.868271 6.54712 0.854471 6.61352 0.853901C6.67992 0.853321 6.74572 0.865971 6.80722 0.891111C6.86862 0.916251 6.92442 0.953381 6.97142 1.00032C7.01832 1.04727 7.05552 1.1031 7.08062 1.16454C7.10572 1.22599 7.11842 1.29183 7.11782 1.35822C7.11722 1.42461 7.10342 1.49022 7.07722 1.55122C7.05102 1.61222 7.01292 1.6674 6.96522 1.71352L4.31871 4.36002L6.96522 7.00652C7.05632 7.10037 7.10672 7.22708 7.10552 7.35818C7.10442 7.48928 7.05182 7.61468 6.95912 7.70738C6.86642 7.80018 6.74102 7.85268 6.60992 7.85388C6.47882 7.85498 6.35212 7.80458 6.25822 7.71352L3.61171 5.06702L0.965207 7.71352C0.871447 7.80725 0.744296 7.85991 0.611706 7.85991C0.479116 7.85991 0.351966 7.80725 0.258206 7.71352C0.164476 7.61976 0.111816 7.4926 0.111816 7.36002C0.111816 7.22744 0.164476 7.10028 0.258206 7.00652L2.90471 4.36002L0.258206 1.71352C0.164476 1.61976 0.111816 1.4926 0.111816 1.36002C0.111816 1.22744 0.164476 1.10028 0.258206 1.00652Z" fill="currentColor"/>
                 </svg>
             </button>
         </div>
         <div class="p-4 flex flex-col space-y-4">
-            <a href="#overview" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">概述</a>
-            <a href="#features" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">特性</a>
-            <a href="#architecture" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">架构</a>
-            <a href="#quickstart" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">快速开始</a>
-            <a href="#technical" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">技术深潜</a>
-            <a href="#learning" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">学习路径</a>
-            <a href="#community" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">社区</a>
+            <a href="#overview" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">Overview</a>
+            <a href="#features" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">Features</a>
+            <a href="#architecture" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">Architecture</a>
+            <a href="#quickstart" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">Quick Start</a>
+            <a href="#technical" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">Technical Deep Dive</a>
         </div>
     </div>
 
     <!-- 英雄区域 -->
     <section class="relative overflow-hidden pt-24 pb-32 md:pt-32 md:pb-40">
-        <!-- 动画网格背景 -->
+        <!-- Animated Grid Background -->
         <div class="absolute inset-0 -z-10 h-full w-full bg-white dark:bg-gray-950 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:48px_48px]"></div>
-        <!-- 发光形状 -->
+        <!-- Glowing Shapes -->
         <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-primary-300 dark:bg-primary-700 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-2xl opacity-30 animate-pulse-glow animation-delay-200 -z-10"></div>
         <div class="absolute bottom-1/4 right-1/4 w-40 h-40 bg-secondary-300 dark:bg-secondary-700 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-3xl opacity-30 animate-pulse-glow animation-delay-400 -z-10"></div>
 
@@ -217,10 +210,10 @@
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4 opacity-0 animate-fade-in-up" style="animation-delay: 0.6s;">
                     <a href="#quickstart" class="btn-primary">
-                        <i class="fas fa-rocket mr-2"></i> 开始使用
+                        <i class="fas fa-rocket mr-2"></i> Get Started
                     </a>
                     <a href="https://github.com/marstaos/MetaSearch" target="_blank" class="btn-secondary">
-                        <i class="fab fa-github mr-2"></i> 查看 GitHub
+                        <i class="fab fa-github mr-2"></i> View on GitHub
                     </a>
                 </div>
             </div>
@@ -231,9 +224,9 @@
     <section id="overview" class="py-20 md:py-28 bg-white dark:bg-gray-900">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center" data-aos="fade-up">
-                <h2 class="section-title">MetaSearch 是什么？</h2>
+                <h2 class="section-title">What is MetaSearch?</h2>
                 <p class="section-subtitle">
-                    MetaSearch 是一个基于深度迭代检索原理构建的先进检索增强生成 (RAG) 系统。它通过逐步精炼搜索、融合多种检索技术，并利用大语言模型 (LLM) 来提供全面且上下文丰富的答案。
+                    MetaSearch is an advanced Retrieval-Augmented Generation (RAG) system built upon the principle of deep iterative retrieval. It progressively refines searches, integrates multiple retrieval techniques, and leverages Large Language Models (LLMs) to provide comprehensive and contextually rich answers.
                 </p>
             </div>
         </div>
@@ -242,16 +235,16 @@
      <!-- 特性部分 -->
     <section id="features" class="py-20 md:py-28">
          <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="section-title text-center mb-16" data-aos="fade-up">核心特性</h2>
+            <h2 class="section-title text-center mb-16" data-aos="fade-up">Key Features</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex flex-col sm:flex-row items-start sm:items-center mb-4">
                          <div class="feature-icon-wrapper">
                             <i class="fas fa-layer-group text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">模块化 RAG 框架</h3>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">Modular RAG Framework</h3>
                     </div>
-                    <p class="text-gray-600 dark:text-gray-300">遵循社区标准，学习使用清晰、模块化的架构构建 LLM 项目的最佳实践。</p>
+                    <p class="text-gray-600 dark:text-gray-300">Learn best practices for building LLM projects with a clean, modular architecture following community standards.</p>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
@@ -259,9 +252,9 @@
                         <div class="feature-icon-wrapper">
                             <i class="fas fa-sync-alt text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">深度迭代检索</h3>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">Deep Iterative Retrieval</h3>
                     </div>
-                    <p class="text-gray-600 dark:text-gray-300">实现前沿的 RAG 算法，通过多轮搜索迭代深入探索信息。</p>
+                    <p class="text-gray-600 dark:text-gray-300">Implements cutting-edge RAG algorithms, exploring information deeply through multiple search iterations.</p>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
@@ -269,9 +262,9 @@
                         <div class="feature-icon-wrapper">
                             <i class="fas fa-cubes text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">混合检索融合</h3>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">Hybrid Retrieval Fusion</h3>
                     </div>
-                    <p class="text-gray-600 dark:text-gray-300">结合向量搜索、关键词搜索 (TF-IDF) 和知识图谱检索，实现更广泛的覆盖。</p>
+                    <p class="text-gray-600 dark:text-gray-300">Combines vector search, keyword search (TF-IDF), and knowledge graph retrieval for broader coverage.</p>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
@@ -279,9 +272,9 @@
                         <div class="feature-icon-wrapper">
                             <i class="fas fa-lightbulb text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">智能查询扩展</h3>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">Intelligent Query Expansion</h3>
                     </div>
-                    <p class="text-gray-600 dark:text-gray-300">利用 LLM 动态生成子查询，实现知识探索的广度和深度。</p>
+                    <p class="text-gray-600 dark:text-gray-300">Dynamically generates sub-queries using LLMs to achieve greater breadth and depth in knowledge exploration.</p>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
@@ -289,9 +282,9 @@
                         <div class="feature-icon-wrapper">
                             <i class="fas fa-chart-line text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">自适应搜索控制</h3>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">Adaptive Search Control</h3>
                     </div>
-                    <p class="text-gray-600 dark:text-gray-300">基于新发现信息的比例决定是否继续搜索，优化效率。</p>
+                    <p class="text-gray-600 dark:text-gray-300">Decides whether to continue searching based on the ratio of newly discovered information, optimizing efficiency.</p>
                 </div>
 
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
@@ -299,9 +292,9 @@
                         <div class="feature-icon-wrapper">
                             <i class="fas fa-sort-amount-up text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">多样性重排序</h3>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">Diversity Re-ranking</h3>
                     </div>
-                    <p class="text-gray-600 dark:text-gray-300">利用最大边际相关性 (MMR) 平衡相关性和多样性，提供更全面的结果。</p>
+                    <p class="text-gray-600 dark:text-gray-300">Utilizes Maximal Marginal Relevance (MMR) to balance relevance and diversity, providing more comprehensive results.</p>
                 </div>
             </div>
         </div>
@@ -310,20 +303,20 @@
     <!-- 系统架构 -->
     <section id="architecture" class="py-20 md:py-28 bg-gradient-to-b from-gray-100 to-white dark:from-gray-900 dark:to-gray-950">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="section-title text-center mb-16" data-aos="fade-up">系统架构</h2>
+            <h2 class="section-title text-center mb-16" data-aos="fade-up">System Architecture</h2>
             <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-                <!-- 核心模块 -->
+                <!-- Core Modules -->
                 <div data-aos="fade-right">
-                    <h3 class="subsection-title text-center lg:text-left">核心组件</h3>
+                    <h3 class="subsection-title text-center lg:text-left">Core Components</h3>
                     <div class="space-y-6">
                         <div class="card p-6 flex items-start space-x-4 hover:border-primary-300 dark:hover:border-primary-700">
                             <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300">
                                 <i class="fas fa-file-alt text-lg"></i>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">文档处理</h4>
-                                <p class="text-gray-600 dark:text-gray-400 text-sm">将原始文档分割成带有上下文和摘要的可管理文本块。</p>
+                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">Document Processing</h4>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Splits raw documents into manageable text chunks with context and summaries.</p>
                             </div>
                         </div>
                          <div class="card p-6 flex items-start space-x-4 hover:border-primary-300 dark:hover:border-primary-700">
@@ -331,8 +324,8 @@
                                <i class="fas fa-database text-lg"></i>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">索引构建</h4>
-                                <p class="text-gray-600 dark:text-gray-400 text-sm">构建向量、TF-IDF 和知识图谱索引以实现高效检索。</p>
+                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">Index Construction</h4>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Builds Vector, TF-IDF, and Knowledge Graph indexes for efficient retrieval.</p>
                             </div>
                         </div>
                          <div class="card p-6 flex items-start space-x-4 hover:border-primary-300 dark:hover:border-primary-700">
@@ -340,8 +333,8 @@
                                 <i class="fas fa-search-plus text-lg"></i>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">检索模块</h4>
-                                <p class="text-gray-600 dark:text-gray-400 text-sm">结合多种检索方法（向量、关键词、图谱）查找相关文档。</p>
+                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">Retrieval Module</h4>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Combines multiple retrieval methods (vector, keyword, graph) to find relevant documents.</p>
                             </div>
                         </div>
                          <div class="card p-6 flex items-start space-x-4 hover:border-primary-300 dark:hover:border-primary-700">
@@ -349,8 +342,8 @@
                                 <i class="fas fa-code-branch text-lg"></i>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">查询扩展</h4>
-                                <p class="text-gray-600 dark:text-gray-400 text-sm">使用 LLM 基于检索到的信息生成新的子查询。</p>
+                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">Query Expansion</h4>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Generates new sub-queries based on retrieved information using LLMs.</p>
                             </div>
                         </div>
                          <div class="card p-6 flex items-start space-x-4 hover:border-primary-300 dark:hover:border-primary-700">
@@ -358,69 +351,69 @@
                                 <i class="fas fa-robot text-lg"></i>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">深度 RAG 编排器</h4>
-                                <p class="text-gray-600 dark:text-gray-400 text-sm">协调迭代检索过程并综合生成最终答案。</p>
+                                <h4 class="font-semibold text-lg text-gray-900 dark:text-white mb-1">Deep RAG Orchestrator</h4>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Coordinates the iterative retrieval process and synthesizes the final answer.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 工作流 -->
+                <!-- Workflow -->
                  <div data-aos="fade-left" data-aos-delay="100">
-                    <h3 class="subsection-title text-center lg:text-left">工作流程</h3>
+                    <h3 class="subsection-title text-center lg:text-left">Workflow</h3>
                     <div class="card p-8">
                         <div class="flow-chart-container relative">
                             <div class="flow-item">
                                 <div class="flow-item-icon"><i class="fas fa-user text-lg"></i></div>
-                                <span class="text-gray-700 dark:text-gray-300 font-medium">用户查询输入</span>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">User Query Input</span>
                             </div>
                              <div class="flow-item">
                                 <div class="flow-item-icon"><i class="fas fa-search text-lg"></i></div>
-                                <span class="text-gray-700 dark:text-gray-300 font-medium">初始检索 (混合)</span>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">Initial Retrieval (Hybrid)</span>
                             </div>
                             <div class="flow-item">
                                 <div class="flow-item-icon"><i class="fas fa-lightbulb text-lg"></i></div>
-                                <span class="text-gray-700 dark:text-gray-300 font-medium">生成子查询 (LLM)</span>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">Generate Sub-queries (LLM)</span>
                              </div>
                              <div class="flow-item">
                                 <div class="flow-item-icon"><i class="fas fa-sync-alt text-lg"></i></div>
-                                <span class="text-gray-700 dark:text-gray-300 font-medium">迭代检索与扩展</span>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">Iterative Retrieval & Expansion</span>
                              </div>
                              <div class="flow-item">
                                 <div class="flow-item-icon"><i class="fas fa-sort-amount-up text-lg"></i></div>
-                                <span class="text-gray-700 dark:text-gray-300 font-medium">重排序与综合</span>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">Re-rank & Synthesize</span>
                             </div>
                             <div class="flow-item">
                                 <div class="flow-item-icon"><i class="fas fa-comment-dots text-lg"></i></div>
-                                <span class="text-gray-700 dark:text-gray-300 font-medium">生成最终答案 (LLM)</span>
+                                <span class="text-gray-700 dark:text-gray-300 font-medium">Generate Final Answer (LLM)</span>
                              </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 目录结构 -->
+            <!-- Directory Structure -->
             <div class="max-w-4xl mx-auto mt-16" data-aos="fade-up">
                  <div class="card p-6">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">项目目录结构</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Project Directory Structure</h3>
                     <div class="code-block">
                         <pre><code>MetaSearch/
-├── config/           # 配置文件 (YAML)
-├── data/             # 数据目录 (原始, 处理后, 索引)
-│   ├── raw/          # 原始数据
-│   ├── processed/    # 处理后的数据
-│   └── indexes/      # 索引文件
-├── deepsearch/       # 核心库代码
-│   ├── indexing/     # 索引逻辑 (向量, tfidf, 图谱)
-│   ├── llm/          # LLM 接口封装
-│   ├── preprocessing/# 文档解析与分块
-│   ├── rag/          # RAG 流水线实现 (标准, 深度)
-│   ├── retrieval/    # 检索策略与重排序
-│   └── utils/        # 工具函数
-├── scripts/          # 辅助脚本 (下载, 处理)
-├── app.py            # 主应用入口点
-├── requirements.txt  # 项目依赖
-└── README.md         # 项目文档</code></pre>
+├── config/           # Configuration files (YAML)
+├── data/             # Data directory (raw, processed, indexes)
+│   ├── raw/
+│   ├── processed/
+│   └── indexes/
+├── deepsearch/       # Core library code
+│   ├── indexing/     # Indexing logic (vector, tfidf, graph)
+│   ├── llm/          # LLM interface wrappers
+│   ├── preprocessing/# Document parsing and chunking
+│   ├── rag/          # RAG pipeline implementation (standard, deep)
+│   ├── retrieval/    # Retrieval strategies and re-ranking
+│   └── utils/        # Utility functions
+├── scripts/          # Helper scripts (downloading, processing)
+├── app.py            # Main application entry point
+├── requirements.txt  # Project dependencies
+└── README.md         # Project documentation</code></pre>
                     </div>
                 </div>
             </div>
@@ -430,15 +423,15 @@
     <!-- 快速开始 -->
     <section id="quickstart" class="py-20 md:py-28">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="section-title text-center mb-16" data-aos="fade-up">快速开始指南</h2>
+            <h2 class="section-title text-center mb-16" data-aos="fade-up">Quick Start Guide</h2>
             <div class="max-w-4xl mx-auto">
                 <div class="hs-accordion-group space-y-6">
-                    <!-- 步骤 1: 环境设置 -->
+                    <!-- Step 1: Environment Setup -->
                     <div class="hs-accordion bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700" id="quickstart-accordion-1" data-aos="fade-up">
                         <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-4 px-6 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 dark:text-gray-200 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="quickstart-collapse-1">
                              <span class="flex items-center">
                                 <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300 mr-3 text-sm font-bold">1</span>
-                                环境设置
+                                Environment Setup
                             </span>
                             <svg class="hs-accordion-active:hidden block w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                             <svg class="hs-accordion-active:block hidden w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
@@ -446,26 +439,26 @@
                         <div id="quickstart-collapse-1" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="quickstart-accordion-1">
                             <div class="px-6 pb-4">
                                 <div class="code-block mb-4">
-                                    <pre><code class="language-bash"># 创建并激活 conda 环境
+                                    <pre><code class="language-bash"># Create and activate conda environment
 conda create -n metasearch python=3.10 -y
 conda activate metasearch
 
-# 安装依赖 (推荐 CUDA 11.8)
+# Install dependencies (CUDA 11.8 recommended)
 pip install -r requirements.txt
-# 若需 CUDA 11.8 支持:
+# For CUDA 11.8 support:
 pip install torch==2.0.1+cu118 --extra-index-url https://download.pytorch.org/whl/cu118</code></pre>
                                 </div>
-                                <p class="text-gray-600 dark:text-gray-300 text-sm">编辑 <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">config/config.yaml</code> 设置模型路径、API 密钥等。</p>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm">Edit <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">config/config.yaml</code> to set model paths, API keys, etc.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 步骤 2: 下载模型 -->
+                    <!-- Step 2: Model Download -->
                     <div class="hs-accordion bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700" id="quickstart-accordion-2" data-aos="fade-up">
                         <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-4 px-6 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 dark:text-gray-200 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="quickstart-collapse-2">
                            <span class="flex items-center">
                                 <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300 mr-3 text-sm font-bold">2</span>
-                                下载模型
+                                Download Models
                             </span>
                             <svg class="hs-accordion-active:hidden block w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                             <svg class="hs-accordion-active:block hidden w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
@@ -473,51 +466,51 @@ pip install torch==2.0.1+cu118 --extra-index-url https://download.pytorch.org/wh
                         <div id="quickstart-collapse-2" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="quickstart-accordion-2">
                             <div class="px-6 pb-4">
                                 <div class="code-block">
-                                    <pre><code class="language-bash"># 推荐: 下载 Embedding 和 Reranker 模型 (约 2.3GB)
+                                    <pre><code class="language-bash"># Recommended: Download Embedding and Reranker models (~2.3GB)
 python scripts/download_models.py --embedding --reranker
 
-# 可选: 下载生成模型 (例如 Qwen, 需要更多资源)
+# Optional: Download generation model (e.g., Qwen, requires more resources)
 # python scripts/download_models.py --llm qwen
 
-# 或者, 下载所有配置的模型
+# Or, download all configured models
 # python scripts/download_models.py --all</code></pre>
                                 </div>
-                                 <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">确保 <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">config.yaml</code> 中的模型路径与下载位置匹配。</p>
+                                 <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">Ensure model paths in <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">config.yaml</code> match download locations.</p>
                             </div>
                         </div>
                     </div>
 
-                     <!-- 步骤 3: 处理文档 -->
+                     <!-- Step 3: Process Documents -->
                     <div class="hs-accordion bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700" id="quickstart-accordion-3" data-aos="fade-up">
                         <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-4 px-6 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 dark:text-gray-200 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="quickstart-collapse-3">
                             <span class="flex items-center">
                                 <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300 mr-3 text-sm font-bold">3</span>
-                                处理您的文档
+                                Process Your Documents
                             </span>
                             <svg class="hs-accordion-active:hidden block w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                             <svg class="hs-accordion-active:block hidden w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
                         </button>
                         <div id="quickstart-collapse-3" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="quickstart-accordion-3">
                             <div class="px-6 pb-4">
-                                <p class="text-gray-600 dark:text-gray-300 text-sm mb-3">将您的文档 (例如 .txt, .md, .pdf) 放入 <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">data/raw/</code> 目录。</p>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm mb-3">Place your documents (e.g., .txt, .md, .pdf) into the <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">data/raw/</code> directory.</p>
                                 <div class="code-block">
-                                    <pre><code class="language-bash"># 处理单个文件
+                                    <pre><code class="language-bash"># Process a single file
 python scripts/process_documents.py --file data/raw/your_document.pdf
 
-# 处理 raw 目录中的所有文件
+# Process all files in the raw directory
 python scripts/process_documents.py --dir data/raw/</code></pre>
                                 </div>
-                                <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">处理后的块将保存在 <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">data/processed/</code>。</p>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">Processed chunks will be saved in <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">data/processed/</code>.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 步骤 4: 构建索引 -->
+                    <!-- Step 4: Build Indexes -->
                     <div class="hs-accordion bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700" id="quickstart-accordion-4" data-aos="fade-up">
                         <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-4 px-6 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 dark:text-gray-200 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="quickstart-collapse-4">
                             <span class="flex items-center">
                                 <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300 mr-3 text-sm font-bold">4</span>
-                                构建索引
+                                Build Indexes
                             </span>
                             <svg class="hs-accordion-active:hidden block w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                             <svg class="hs-accordion-active:block hidden w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
@@ -525,20 +518,20 @@ python scripts/process_documents.py --dir data/raw/</code></pre>
                         <div id="quickstart-collapse-4" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="quickstart-accordion-4">
                             <div class="px-6 pb-4">
                                 <div class="code-block">
-                                    <pre><code class="language-bash"># 使用默认处理后的块文件构建所有配置的索引
+                                    <pre><code class="language-bash"># Build all configured indexes using the default processed chunk file
 python scripts/build_indexes.py --chunks data/processed/index_chunk.pkl</code></pre>
                                 </div>
-                                <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">索引 (FAISS, TF-IDF 等) 将保存在 <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">data/indexes/</code>。</p>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm mt-2">Indexes (FAISS, TF-IDF, etc.) will be saved in <code class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">data/indexes/</code>.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 步骤 5: 运行系统 -->
+                    <!-- Step 5: Run the System -->
                     <div class="hs-accordion bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700" id="quickstart-accordion-5" data-aos="fade-up">
                         <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-4 px-6 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 dark:text-gray-200 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="quickstart-collapse-5">
                            <span class="flex items-center">
                                 <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-300 mr-3 text-sm font-bold">5</span>
-                                启动 MetaSearch
+                                Launch MetaSearch
                             </span>
                             <svg class="hs-accordion-active:hidden block w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                             <svg class="hs-accordion-active:block hidden w-4 h-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
@@ -546,18 +539,18 @@ python scripts/build_indexes.py --chunks data/processed/index_chunk.pkl</code></
                         <div id="quickstart-collapse-5" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="quickstart-accordion-5">
                             <div class="px-6 pb-4 space-y-4">
                                 <div>
-                                    <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">交互模式:</h4>
+                                    <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">Interactive Mode:</h4>
                                     <div class="code-block">
                                         <pre><code class="language-bash">python app.py --interactive</code></pre>
                                     </div>
-                                    <p class="text-gray-600 dark:text-gray-400 text-xs mt-1">在您的终端中启动一个类似聊天的界面。</p>
+                                    <p class="text-gray-600 dark:text-gray-400 text-xs mt-1">Start a chat-like interface in your terminal.</p>
                                 </div>
                                 <div>
-                                    <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">单个查询:</h4>
+                                    <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">Single Query:</h4>
                                     <div class="code-block">
-                                        <pre><code class="language-bash">python app.py --query "明朝内阁制度的作用是什么？"</code></pre>
+                                        <pre><code class="language-bash">python app.py --query "What was the role of the Grand Secretariat in the Ming Dynasty?"</code></pre>
                                     </div>
-                                     <p class="text-gray-600 dark:text-gray-400 text-xs mt-1">运行单个查询并打印结果。</p>
+                                     <p class="text-gray-600 dark:text-gray-400 text-xs mt-1">Run a single query and print the result.</p>
                                 </div>
                             </div>
                         </div>
@@ -570,92 +563,92 @@ python scripts/build_indexes.py --chunks data/processed/index_chunk.pkl</code></
     <!-- 技术详情 -->
     <section id="technical" class="py-20 md:py-28 bg-gradient-to-b from-gray-100 to-white dark:from-gray-900 dark:to-gray-950">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="section-title text-center mb-16" data-aos="fade-up">技术深潜</h2>
+            <h2 class="section-title text-center mb-16" data-aos="fade-up">Technical Deep Dive</h2>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
-                <!-- 文档处理 -->
+                <!-- Document Processing -->
                 <div class="card p-6" data-aos="fade-right">
                     <div class="flex items-center mb-4">
                         <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-secondary-400 to-secondary-500 text-white mr-3"> <i class="fas fa-cogs"></i> </div>
-                        <h3 class="text-xl font-semibold">文档处理与分块</h3>
+                        <h3 class="text-xl font-semibold">Document Processing & Chunking</h3>
                     </div>
                     <p class="text-gray-600 dark:text-gray-300 mb-4">
-                        原始文档被解析并分割成重叠的块。每个块存储：
+                        Raw documents are parsed and split into overlapping chunks. Each chunk stores:
                     </p>
                     <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400 mb-4 text-sm">
-                        <li><code class="text-xs">content</code>: 块的主要文本。</li>
-                        <li><code class="text-xs">chunk_id</code>: 唯一标识符。</li>
-                        <li><code class="text-xs">parent_content</code>: 可选的更大上下文块。</li>
-                        <li><code class="text-xs">abstract</code>: LLM 生成的摘要 (可选)。</li>
-                        <li>元数据: 源文档、页码等。</li>
+                        <li><code class="text-xs">content</code>: The main text of the chunk.</li>
+                        <li><code class="text-xs">chunk_id</code>: A unique identifier.</li>
+                        <li><code class="text-xs">parent_content</code>: Optional larger context block.</li>
+                        <li><code class="text-xs">abstract</code>: LLM-generated summary (optional).</li>
+                        <li>Metadata: Source document, page number, etc.</li>
                     </ul>
                     <div class="code-block text-xs">
-                        <pre><code># 示例配置 (config/config.yaml)
+                        <pre><code># Example config (config/config.yaml)
 processing:
-  chunk_size: 512      # 每个块的目标大小
-  overlap_size: 64     # 连续块之间的重叠大小
-  generate_abstract: true # 是否生成摘要</code></pre>
+  chunk_size: 512      # Target size for each chunk
+  overlap_size: 64     # Overlap between consecutive chunks
+  generate_abstract: true # Whether to generate summaries</code></pre>
                     </div>
                 </div>
 
-                 <!-- 混合索引 -->
+                 <!-- Multi-modal Indexing -->
                 <div class="card p-6" data-aos="fade-left" data-aos-delay="100">
                     <div class="flex items-center mb-4">
                          <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-secondary-400 to-secondary-500 text-white mr-3"> <i class="fas fa-sitemap"></i> </div>
-                        <h3 class="text-xl font-semibold">混合索引</h3>
+                        <h3 class="text-xl font-semibold">Hybrid Indexing</h3>
                     </div>
                     <p class="text-gray-600 dark:text-gray-300 mb-4">
-                        多个索引捕获数据的不同方面：
+                        Multiple indexes capture different aspects of the data:
                     </p>
                     <ol class="list-decimal list-inside space-y-3 text-gray-600 dark:text-gray-400 text-sm">
-                        <li><strong class="text-gray-700 dark:text-gray-200">向量索引 (FAISS):</strong> 使用嵌入 (例如 BCE-Embedding) 进行语义相似性搜索。</li>
-                        <li><strong class="text-gray-700 dark:text-gray-200">TF-IDF 索引:</strong> 经典的基于关键词的检索，适用于特定术语。</li>
-                        <li><strong class="text-gray-700 dark:text-gray-200">知识图谱 (可选):</strong> 提取实体和关系以进行结构化查询。</li>
+                        <li><strong class="text-gray-700 dark:text-gray-200">Vector Index (FAISS):</strong> Uses embeddings (e.g., BCE-Embedding) for semantic similarity search.</li>
+                        <li><strong class="text-gray-700 dark:text-gray-200">TF-IDF Index:</strong> Classic keyword-based retrieval, good for specific terms.</li>
+                        <li><strong class="text-gray-700 dark:text-gray-200">Knowledge Graph (Optional):</strong> Extracts entities and relationships for structured queries.</li>
                     </ol>
-                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-4">检索模块融合来自已启用索引的结果。</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-4">The retrieval module fuses results from enabled indexes.</p>
                 </div>
 
-                <!-- 查询扩展 -->
+                <!-- Query Expansion -->
                 <div class="card p-6" data-aos="fade-right" data-aos-delay="200">
                     <div class="flex items-center mb-4">
                          <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-secondary-400 to-secondary-500 text-white mr-3"> <i class="fas fa-search-location"></i> </div>
-                        <h3 class="text-xl font-semibold">查询扩展机制</h3>
+                        <h3 class="text-xl font-semibold">Query Expansion Mechanism</h3>
                     </div>
                     <p class="text-gray-600 dark:text-gray-300 mb-4">
-                        迭代地扩展搜索范围：
+                        Expands search scope iteratively:
                     </p>
                     <ol class="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-400 text-sm">
-                        <li>LLM 从检索到的结果中提取关键搜索词/子问题。</li>
-                        <li>计算潜在子查询与原始查询的相关性分数。</li>
-                        <li>汇集所有迭代中的候选子查询。</li>
-                        <li>根据相关性和发现新信息的潜力选择得分最高的 k 个子查询。</li>
-                        <li>这些成为下一次检索迭代的输入。</li>
+                        <li>LLM extracts key search terms/sub-questions from retrieved results.</li>
+                        <li>Calculate relevance score of potential sub-queries against the original query.</li>
+                        <li>Pool all candidate sub-queries across iterations.</li>
+                        <li>Select top-k scoring sub-queries based on relevance and potential for new information.</li>
+                        <li>These become inputs for the next retrieval iteration.</li>
                     </ol>
                 </div>
 
-                <!-- 深度迭代检索 -->
+                <!-- Deep Iterative Retrieval -->
                 <div class="card p-6" data-aos="fade-left" data-aos-delay="300">
                     <div class="flex items-center mb-4">
                          <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-gradient-to-br from-secondary-400 to-secondary-500 text-white mr-3"> <i class="fas fa-project-diagram"></i> </div>
-                        <h3 class="text-xl font-semibold">深度迭代检索循环</h3>
+                        <h3 class="text-xl font-semibold">Deep Iterative Retrieval Loop</h3>
                     </div>
                     <p class="text-gray-600 dark:text-gray-300 mb-4">
-                        核心引擎在一个循环中运行：
+                        The core engine operates in a loop:
                     </p>
                     <ol class="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-400 mb-4 text-sm">
-                        <li>从初始用户查询开始。</li>
-                        <li>执行标准 RAG (检索、重排序、生成响应片段)。</li>
-                        <li>计算信息增长率 (IGR): `len(new_chunk_ids) / len(existing_chunk_ids)`。</li>
-                        <li>如果 IGR < 阈值或达到最大迭代次数，则停止。</li>
-                        <li>否则，使用查询扩展为下一个循环生成新的子查询。</li>
-                        <li>最后，将所有收集到的知识综合成一个最终的、全面的答案。</li>
+                        <li>Start with the initial user query.</li>
+                        <li>Perform standard RAG (retrieve, re-rank, generate response snippet).</li>
+                        <li>Calculate Information Growth Rate (IGR): `len(new_chunk_ids) / len(existing_chunk_ids)`.</li>
+                        <li>If IGR < threshold or max iterations reached, stop.</li>
+                        <li>Else, use Query Expansion to generate new sub-queries for the next loop.</li>
+                        <li>Finally, synthesize all gathered knowledge into a final, comprehensive answer.</li>
                     </ol>
                      <div class="code-block text-xs">
-                        <pre><code># 示例配置 (config/config.yaml)
+                        <pre><code># Example config (config/config.yaml)
 deepsearch:
-  max_iterations: 3          # 最大检索循环次数
-  growth_rate_threshold: 0.1 # 如果发现的新信息少于 10%，则停止
-  extend_query_num: 3        # 每次迭代的子查询数量</code></pre>
+  max_iterations: 3          # Max number of retrieval loops
+  growth_rate_threshold: 0.1 # Stop if less than 10% new info found
+  extend_query_num: 3        # Number of sub-queries per iteration</code></pre>
                     </div>
                 </div>
             </div>
@@ -663,82 +656,82 @@ deepsearch:
              <!-- 流程示例 -->
             <div class="max-w-4xl mx-auto mt-16" data-aos="fade-up">
                 <div class="card p-8">
-                    <h3 class="subsection-title text-center mb-8">工作流程示例: "明朝内阁制度"</h3>
+                    <h3 class="subsection-title text-center mb-8">Example Workflow: "Ming Dynasty Cabinet System"</h3>
                     <div class="space-y-8">
-                        <!-- 迭代 1 -->
+                        <!-- Iteration 1 -->
                         <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700/50 shadow-sm">
-                            <h4 class="font-semibold text-lg text-primary-600 dark:text-primary-400 mb-3">迭代 1</h4>
+                            <h4 class="font-semibold text-lg text-primary-600 dark:text-primary-400 mb-3">Iteration 1</h4>
                             <ol class="list-decimal list-inside space-y-3 text-gray-600 dark:text-gray-300 text-sm">
                                 <li>
-                                    <strong class="text-gray-700 dark:text-gray-200">输入查询:</strong> "明朝内阁制度"
+                                    <strong class="text-gray-700 dark:text-gray-200">Input Query:</strong> "Ming Dynasty Cabinet System"
                                     <ul class="list-disc list-inside ml-6 mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                        <li>初始知识库: 空</li>
-                                        <li>现有块 ID: 空集合</li>
+                                        <li>Initial knowledge: Empty</li>
+                                        <li>Existing chunk IDs: Empty set</li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <strong class="text-gray-700 dark:text-gray-200">标准 RAG 执行:</strong>
+                                    <strong class="text-gray-700 dark:text-gray-200">Standard RAG Execution:</strong>
                                     <ul class="list-disc list-inside ml-6 mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                        <li>检索相关块 (例如 ID: {101, 102, 103, 104, 105})。</li>
-                                        <li>生成初始响应片段: "明朝内阁起源于永乐年间..."</li>
-                                        <li>将片段添加到知识库。</li>
-                                        <li>更新现有 ID: {101, 102, 103, 104, 105}</li>
+                                        <li>Retrieve relevant chunks (e.g., IDs: {101, 102, 103, 104, 105}).</li>
+                                        <li>Generate initial response snippet: "The Ming Cabinet originated during the Yongle era..."</li>
+                                        <li>Add snippet to knowledge base.</li>
+                                        <li>Update existing IDs: {101, 102, 103, 104, 105}</li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <strong class="text-gray-700 dark:text-gray-200">计算 IGR:</strong> 5 (新) / 1 (总计，概念上) = 5.0。由于 5.0 > 0.1 (阈值)，继续。
+                                    <strong class="text-gray-700 dark:text-gray-200">Calculate IGR:</strong> 5 (new) / 1 (total, conceptually) = 5.0. Since 5.0 > 0.1 (threshold), continue.
                                 </li>
                                 <li>
-                                    <strong class="text-gray-700 dark:text-gray-200">扩展查询:</strong>
+                                    <strong class="text-gray-700 dark:text-gray-200">Expand Query:</strong>
                                     <ul class="list-disc list-inside ml-6 mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                        <li>LLM 分析片段，建议子查询: ["大学士", "内阁权力", "张居正改革", ...]。</li>
-                                        <li>为下次迭代选择前 3 个相关子查询: 例如 ["明朝大学士", "明朝内阁的演变", "内阁与皇权"]。</li>
+                                        <li>LLM analyzes snippet, suggests sub-queries: ["Grand Secretaries", "Cabinet powers", "Zhang Juzheng reforms", ...].</li>
+                                        <li>Select top 3 relevant sub-queries for next iteration: e.g., ["Ming Grand Secretaries", "Evolution of Ming Cabinet", "Cabinet vs Imperial Power"].</li>
                                     </ul>
                                 </li>
                             </ol>
                         </div>
 
-                        <!-- 迭代 2 -->
+                        <!-- Iteration 2 -->
                         <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700/50 shadow-sm">
-                            <h4 class="font-semibold text-lg text-primary-600 dark:text-primary-400 mb-3">迭代 2</h4>
+                            <h4 class="font-semibold text-lg text-primary-600 dark:text-primary-400 mb-3">Iteration 2</h4>
                             <ol class="list-decimal list-inside space-y-3 text-gray-600 dark:text-gray-300 text-sm">
                                 <li>
-                                    <strong class="text-gray-700 dark:text-gray-200">输入查询:</strong> ["明朝大学士", "明朝内阁的演变", "内阁与皇权"]
+                                    <strong class="text-gray-700 dark:text-gray-200">Input Queries:</strong> ["Ming Grand Secretaries", "Evolution of Ming Cabinet", "Cabinet vs Imperial Power"]
                                 </li>
                                 <li>
-                                    <strong class="text-gray-700 dark:text-gray-200">标准 RAG 执行 (针对每个子查询):</strong>
+                                    <strong class="text-gray-700 dark:text-gray-200">Standard RAG Execution (for each sub-query):</strong>
                                     <ul class="list-disc list-inside ml-6 mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                        <li>为每个查询检索块 (例如发现的新 ID: {201, 202, 203, 204})。</li>
-                                        <li>为每个子查询生成响应片段。</li>
-                                        <li>将片段添加到知识库。</li>
-                                        <li>更新现有 ID: {101, 102, ..., 105, 201, ..., 204} (总共: 9)</li>
+                                        <li>Retrieve chunks for each query (e.g., new IDs discovered: {201, 202, 203, 204}).</li>
+                                        <li>Generate response snippets for each sub-query.</li>
+                                        <li>Add snippets to knowledge base.</li>
+                                        <li>Update existing IDs: {101, 102, ..., 105, 201, ..., 204} (Total: 9)</li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <strong class="text-gray-700 dark:text-gray-200">计算 IGR:</strong> 4 (新) / 5 (现有) = 0.8。由于 0.8 > 0.1，可能继续 (取决于最大迭代次数)。
+                                    <strong class="text-gray-700 dark:text-gray-200">Calculate IGR:</strong> 4 (new) / 5 (existing) = 0.8. Since 0.8 > 0.1, potentially continue (depending on max iterations).
                                 </li>
                                 <li>
-                                    <strong class="text-gray-700 dark:text-gray-200">扩展查询 (如果继续):</strong> 生成并选择下一组子查询。
+                                    <strong class="text-gray-700 dark:text-gray-200">Expand Query (if continuing):</strong> Generate and select next set of sub-queries.
                                 </li>
                             </ol>
                         </div>
 
-                        <!-- 最终答案生成 -->
+                        <!-- Final Answer Generation -->
                          <div class="p-6 bg-gradient-to-r from-primary-50 to-secondary-50 dark:from-gray-700 dark:to-gray-800 rounded-lg border border-primary-200 dark:border-primary-700 shadow-md">
-                            <h4 class="font-semibold text-lg text-primary-700 dark:text-primary-300 mb-3"><i class="fas fa-check-circle mr-2"></i>最终答案综合</h4>
+                            <h4 class="font-semibold text-lg text-primary-700 dark:text-primary-300 mb-3"><i class="fas fa-check-circle mr-2"></i>Final Answer Synthesis</h4>
                             <ol class="list-decimal list-inside space-y-3 text-gray-600 dark:text-gray-300 text-sm">
                                 <li>
-                                    <strong class="text-gray-700 dark:text-gray-200">聚合和格式化知识:</strong>
+                                    <strong class="text-gray-700 dark:text-gray-200">Aggregate & Format Knowledge:</strong>
                                     <ul class="list-disc list-inside ml-6 mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                        <li>收集所有迭代中生成的所有响应片段。</li>
-                                        <li>使用重排序模型，根据与 *原始* 查询的相关性对所有收集到的块/片段进行重新排序。</li>
+                                        <li>Collect all generated response snippets from all iterations.</li>
+                                        <li>Re-rank all gathered chunks/snippets based on relevance to the *original* query using a re-ranking model.</li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <strong class="text-gray-700 dark:text-gray-200">生成综合答案:</strong>
+                                    <strong class="text-gray-700 dark:text-gray-200">Generate Comprehensive Answer:</strong>
                                     <ul class="list-disc list-inside ml-6 mt-1 text-xs text-gray-500 dark:text-gray-400">
-                                        <li>构建最终提示，包括原始查询和经过排序、聚合的知识。</li>
-                                        <li>使用 LLM 生成一个连贯、结构化的最终答案，整合收集到的多样化信息。</li>
+                                        <li>Construct a final prompt including the original query and the ranked, aggregated knowledge.</li>
+                                        <li>Use the LLM to generate a coherent, structured final answer incorporating the diverse information gathered.</li>
                                     </ul>
                                 </li>
                             </ol>
@@ -752,93 +745,93 @@ deepsearch:
     <!-- 学习路径 -->
     <section id="learning" class="py-20 md:py-28">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="section-title text-center mb-16" data-aos="fade-up">建议学习路径</h2>
+            <h2 class="section-title text-center mb-16" data-aos="fade-up">Suggested Learning Path</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                 <div class="card p-8" data-aos="fade-right">
                     <div class="flex items-center mb-6">
                          <div class="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-500 text-white mr-4"><i class="fas fa-seedling text-xl"></i></div>
-                         <h3 class="subsection-title !mb-0">初学者路径</h3>
+                         <h3 class="subsection-title !mb-0">Beginner Path</h3>
                     </div>
                     <ol class="list-decimal list-inside space-y-3 text-gray-600 dark:text-gray-300 text-sm">
-                        <li>运行系统 (<code class="text-xs">app.py --interactive</code>) 查看实际效果。</li>
-                        <li>阅读 <code class="text-xs">app.py</code>: 理解初始化和主要的 RAG 调用流程。</li>
-                        <li>探索 <code class="text-xs">deepsearch/preprocessing/</code>: 文档是如何加载和分块的？</li>
-                        <li>学习 <code class="text-xs">deepsearch/indexing/vector_index.py</code>: 基本的向量索引创建和搜索。</li>
-                        <li>查看 <code class="text-xs">deepsearch/llm/</code>: 代码如何与 LLM (本地或 API) 交互？</li>
-                        <li>检查 <code class="text-xs">deepsearch/rag/standard_rag.py</code>: 基础的“检索-生成”流水线。</li>
+                        <li>Run the system (<code class="text-xs">app.py --interactive</code>) to see it in action.</li>
+                        <li>Read <code class="text-xs">app.py</code>: Understand initialization and the main RAG call.</li>
+                        <li>Explore <code class="text-xs">deepsearch/preprocessing/</code>: How are documents loaded and chunked?</li>
+                        <li>Study <code class="text-xs">deepsearch/indexing/vector_index.py</code>: Basic vector index creation and search.</li>
+                        <li>Look at <code class="text-xs">deepsearch/llm/</code>: How does the code interface with LLMs (local or API)?</li>
+                        <li>Examine <code class="text-xs">deepsearch/rag/standard_rag.py</code>: The basic retrieve-then-generate pipeline.</li>
                     </ol>
                 </div>
 
                 <div class="card p-8" data-aos="fade-left" data-aos-delay="100">
                      <div class="flex items-center mb-6">
                          <div class="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-blue-500 text-white mr-4"><i class="fas fa-graduation-cap text-xl"></i></div>
-                         <h3 class="subsection-title !mb-0">进阶路径</h3>
+                         <h3 class="subsection-title !mb-0">Advanced Path</h3>
                     </div>
                     <ol class="list-decimal list-inside space-y-3 text-gray-600 dark:text-gray-300 text-sm">
-                        <li>深入 <code class="text-xs">deepsearch/rag/deep_rag.py</code>: 理解迭代循环、IGR 和查询扩展逻辑。</li>
-                        <li>学习 <code class="text-xs">deepsearch/retrieval/</code>: 探索混合检索和 MMR 重排序。</li>
-                        <li>比较 <code class="text-xs">deepsearch/indexing/</code> 中不同的索引实现。</li>
-                        <li>分析 <code class="text-xs">deepsearch/rag/query_expansion.py</code> 中的查询扩展实现。</li>
-                        <li>尝试调整 <code class="text-xs">config/config.yaml</code> 中的参数 (迭代次数、阈值、模型) 并观察变化。</li>
-                        <li>尝试添加新的文档类型解析器或自定义检索策略。</li>
+                        <li>Dive into <code class="text-xs">deepsearch/rag/deep_rag.py</code>: Understand the iterative loop, IGR, and query expansion logic.</li>
+                        <li>Study <code class="text-xs">deepsearch/retrieval/</code>: Explore hybrid retrieval and MMR re-ranking.</li>
+                        <li>Compare different index implementations in <code class="text-xs">deepsearch/indexing/</code>.</li>
+                        <li>Analyze the query expansion implementation in <code class="text-xs">deepsearch/rag/query_expansion.py</code>.</li>
+                        <li>Experiment with <code class="text-xs">config/config.yaml</code> parameters (iterations, thresholds, models) and observe changes.</li>
+                        <li>Try adding a new document type parser or a custom retrieval strategy.</li>
                     </ol>
                 </div>
             </div>
 
              <!-- FAQ -->
             <div class="max-w-4xl mx-auto mt-16" data-aos="fade-up">
-                 <h3 class="subsection-title text-center mb-8">常见问题解答 (FAQ)</h3>
+                 <h3 class="subsection-title text-center mb-8">Frequently Asked Questions</h3>
                  <div class="hs-accordion-group space-y-4">
                      <div class="hs-accordion bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700" id="faq-1">
                         <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-3 px-5 inline-flex items-center justify-between gap-x-3 w-full font-medium text-left text-gray-700 dark:text-gray-300 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="faq-collapse-1">
-                             为什么要使用多种索引类型？
+                             Why use multiple index types?
                             <svg class="hs-accordion-active:hidden block w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                             <svg class="hs-accordion-active:block hidden w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
                         </button>
                         <div id="faq-collapse-1" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="faq-1">
-                            <p class="text-gray-600 dark:text-gray-400 p-5 text-sm">不同的索引擅长不同的任务。向量索引查找语义相似性，TF-IDF 匹配精确关键词，知识图谱捕获结构化关系。将它们结合起来（混合检索）可以提供更稳健的结果。</p>
+                            <p class="text-gray-600 dark:text-gray-400 p-5 text-sm">Different indexes excel at different tasks. Vector indexes find semantic similarity, TF-IDF matches exact keywords, and Knowledge Graphs capture structured relationships. Combining them (hybrid retrieval) provides more robust results.</p>
                         </div>
                     </div>
                      <div class="hs-accordion bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700" id="faq-2">
                         <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-3 px-5 inline-flex items-center justify-between gap-x-3 w-full font-medium text-left text-gray-700 dark:text-gray-300 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="faq-collapse-2">
-                             信息增长率 (IGR) 是如何计算的？
+                             How is Information Growth Rate (IGR) calculated?
                             <svg class="hs-accordion-active:hidden block w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                             <svg class="hs-accordion-active:block hidden w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
                         </button>
                         <div id="faq-collapse-2" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="faq-2">
-                            <p class="text-gray-600 dark:text-gray-400 p-5 text-sm">它是当前迭代中新发现的唯一文档块 ID 数量与之前所有迭代中找到的总唯一块 ID 数量的比率。高比率意味着搜索仍在发现显著的新信息。</p>
+                            <p class="text-gray-600 dark:text-gray-400 p-5 text-sm">It's the ratio of newly discovered unique document chunk IDs in the current iteration compared to the total unique chunk IDs found in all previous iterations. A high ratio means the search is still finding significantly new information.</p>
                         </div>
                     </div>
                      <div class="hs-accordion bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700" id="faq-3">
                         <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-3 px-5 inline-flex items-center justify-between gap-x-3 w-full font-medium text-left text-gray-700 dark:text-gray-300 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="faq-collapse-3">
-                             如何平衡性能与结果质量？
+                             How to balance performance vs. result quality?
                             <svg class="hs-accordion-active:hidden block w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                             <svg class="hs-accordion-active:block hidden w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
                         </button>
                         <div id="faq-collapse-3" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="faq-3">
-                            <p class="text-gray-600 dark:text-gray-400 p-5 text-sm">调整 <code class="text-xs">config/config.yaml</code> 中的参数：
+                            <p class="text-gray-600 dark:text-gray-400 p-5 text-sm">Adjust parameters in <code class="text-xs">config/config.yaml</code>:
                             <ul class="list-disc list-inside ml-4 mt-2 space-y-1">
-                                <li><code class="text-xs">deepsearch.max_iterations</code>: 较少迭代 = 更快，但可能不够彻底。</li>
-                                <li><code class="text-xs">deepsearch.growth_rate_threshold</code>: 更高阈值 = 更早停止，更快。</li>
-                                <li><code class="text-xs">retrieval.top_k</code>: 每步检索更少文档 = 更快。</li>
-                                <li>模型的选择 (较小的模型更快)。</li>
+                                <li><code class="text-xs">deepsearch.max_iterations</code>: Fewer iterations = faster, potentially less thorough.</li>
+                                <li><code class="text-xs">deepsearch.growth_rate_threshold</code>: Higher threshold = stops earlier, faster.</li>
+                                <li><code class="text-xs">retrieval.top_k</code>: Retrieve fewer documents per step = faster.</li>
+                                <li>Choice of models (smaller models are faster).</li>
                             </ul>
                             </p>
                         </div>
                     </div>
                      <div class="hs-accordion bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700" id="faq-4">
                         <button class="hs-accordion-toggle hs-accordion-active:text-primary-600 group py-3 px-5 inline-flex items-center justify-between gap-x-3 w-full font-medium text-left text-gray-700 dark:text-gray-300 transition hover:text-gray-500 dark:hover:text-gray-400" aria-controls="faq-collapse-4">
-                             如何添加对新文档类型 (例如 .docx) 的支持？
+                             How to add support for a new document type (e.g., .docx)?
                             <svg class="hs-accordion-active:hidden block w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                             <svg class="hs-accordion-active:block hidden w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
                         </button>
                         <div id="faq-collapse-4" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" aria-labelledby="faq-4">
-                            <p class="text-gray-600 dark:text-gray-400 p-5 text-sm">通常需要：
+                            <p class="text-gray-600 dark:text-gray-400 p-5 text-sm">You would typically need to:
                             <ol class="list-decimal list-inside ml-4 mt-2 space-y-1">
-                                <li>安装用于解析 .docx 文件的库 (例如 <code class="text-xs">python-docx</code>)。</li>
-                                <li>在 <code class="text-xs">deepsearch/preprocessing/loading.py</code> 中为 '.docx' 扩展名添加新的加载函数。</li>
-                                <li>确保输出格式与分块函数期望的格式匹配 (通常是纯文本内容和可选元数据)。</li>
+                                <li>Install a library to parse .docx files (e.g., <code class="text-xs">python-docx</code>).</li>
+                                <li>Add a new loading function in <code class="text-xs">deepsearch/preprocessing/loading.py</code> for the '.docx' extension.</li>
+                                <li>Ensure the output format matches what the chunking functions expect (usually plain text content and optional metadata).</li>
                             </ol>
                             </p>
                         </div>
@@ -851,9 +844,9 @@ deepsearch:
     <!-- 社区贡献 -->
     <section id="community" class="py-20 md:py-28 bg-gradient-to-b from-primary-50 to-white dark:from-primary-950 dark:to-gray-950">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="section-title text-center" data-aos="fade-up">加入社区</h2>
+            <h2 class="section-title text-center" data-aos="fade-up">Join the Community</h2>
             <p class="section-subtitle text-center" data-aos="fade-up" data-aos-delay="100">
-                MetaSearch 是一个开源教育项目。欢迎各种形式的贡献！
+                MetaSearch is an open-source educational project. Contributions of all kinds are welcome!
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -861,10 +854,10 @@ deepsearch:
                      <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-full bg-gradient-to-br from-red-100 to-red-200 dark:from-red-800 dark:to-red-900 text-red-600 dark:text-red-300 shadow-lg">
                         <i class="fas fa-bug text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">发现 Bug？</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6 text-sm">报告您遇到的问题，帮助改进项目。</p>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Found a Bug?</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 text-sm">Help improve the project by reporting issues you encounter.</p>
                     <a href="https://github.com/marstaos/MetaSearch/issues/new" target="_blank" class="btn btn-secondary !bg-red-100 !text-red-700 hover:!bg-red-200 dark:!bg-red-900/50 dark:!text-red-300 dark:hover:!bg-red-800/70 text-sm py-2 px-4">
-                       <i class="fas fa-exclamation-circle mr-2"></i> 报告 Issue
+                       <i class="fas fa-exclamation-circle mr-2"></i> Report Issue
                     </a>
                 </div>
 
@@ -872,10 +865,10 @@ deepsearch:
                      <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-full bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-800 dark:to-yellow-900 text-yellow-600 dark:text-yellow-300 shadow-lg">
                         <i class="fas fa-lightbulb text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">有新想法？</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6 text-sm">通过贡献代码分享您的创新和改进。</p>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Have an Idea?</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 text-sm">Share your innovations and improvements by contributing code.</p>
                     <a href="https://github.com/marstaos/MetaSearch/pulls" target="_blank" class="btn btn-secondary !bg-yellow-100 !text-yellow-700 hover:!bg-yellow-200 dark:!bg-yellow-900/50 dark:!text-yellow-300 dark:hover:!bg-yellow-800/70 text-sm py-2 px-4">
-                        <i class="fas fa-code-branch mr-2"></i> 提交 PR
+                        <i class="fas fa-code-branch mr-2"></i> Submit Pull Request
                     </a>
                 </div>
 
@@ -883,17 +876,17 @@ deepsearch:
                     <div class="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-full bg-gradient-to-br from-green-100 to-green-200 dark:from-green-800 dark:to-green-900 text-green-600 dark:text-green-300 shadow-lg">
                         <i class="fas fa-star text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">喜欢这个项目？</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6 text-sm">点亮星星表示支持，并帮助他人发现它！</p>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Like the Project?</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 text-sm">Show your support and help others discover it by giving us a star!</p>
                      <a href="https://github.com/marstaos/MetaSearch" target="_blank" class="btn btn-secondary !bg-green-100 !text-green-700 hover:!bg-green-200 dark:!bg-green-900/50 dark:!text-green-300 dark:hover:!bg-green-800/70 text-sm py-2 px-4">
-                       <i class="fas fa-star mr-2"></i> GitHub Star
+                       <i class="fas fa-star mr-2"></i> Star on GitHub
                     </a>
                 </div>
             </div>
 
             <div class="text-center mt-16" data-aos="fade-up">
                 <p class="text-xl font-semibold gradient-text">
-                    欢迎您的 Forks 和 PR！✨
+                    Your Forks and PRs are welcome! ✨
                 </p>
             </div>
         </div>
@@ -909,32 +902,26 @@ deepsearch:
                         <span class="text-xl font-bold text-white tracking-tight">MetaSearch</span>
                     </a>
                     <p class="text-sm">
-                        深度迭代检索增强生成系统
+                        Deep Iterative Retrieval-Augmented Generation System
                     </p>
-                     <p class="text-xs mt-1">一个由 MaStao 制作的教学项目</p>
+                     <p class="text-xs mt-1">An Educational Project by Marstaos</p>
                 </div>
 
                 <div class="flex flex-col items-center md:items-end">
                     <nav class="flex flex-wrap justify-center md:justify-end space-x-4 text-sm mb-4">
-                         <a href="#overview" class="hover:text-primary-400 transition">概述</a>
-                         <a href="#features" class="hover:text-primary-400 transition">特性</a>
-                         <a href="#quickstart" class="hover:text-primary-400 transition">快速开始</a>
-                         <a href="#technical" class="hover:text-primary-400 transition">技术深潜</a>
-                         <a href="#learning" class="hover:text-primary-400 transition">学习路径</a>
-                         <a href="#community" class="hover:text-primary-400 transition">社区</a>
+                         <a href="#overview" class="hover:text-primary-400 transition">Overview</a>
+                         <a href="#features" class="hover:text-primary-400 transition">Features</a>
+                         <a href="#quickstart" class="hover:text-primary-400 transition">Quick Start</a>
+                         <a href="#technical" class="hover:text-primary-400 transition">Deep Dive</a>
                     </nav>
                     <div class="flex space-x-4 mb-4">
                         <a href="https://github.com/marstaos/MetaSearch" target="_blank" class="text-gray-400 hover:text-white transition duration-150 ease-in-out">
                             <span class="sr-only">GitHub</span>
                             <i class="fab fa-github text-xl"></i>
                         </a>
-                         <a href="index_en.html" class="text-gray-400 hover:text-white transition duration-150 ease-in-out">
-                             <span class="sr-only">Switch Language</span>
-                             <i class="fas fa-language text-xl"></i>
-                         </a>
-                        <!-- 如果需要，在此处添加其他社交链接 -->
+                        <!-- Add other social links here if needed -->
                     </div>
-                    <p class="text-xs">© 2024 MetaSearch 项目。版权所有。</p>
+                    <p class="text-xs">© 2025 MetaSearch Project. Made with 💗 by Marstaos</p>
                 </div>
             </div>
         </div>
@@ -945,18 +932,18 @@ deepsearch:
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <!-- 主题切换 & 平滑滚动 & 动画初始化 -->
+    <!-- Theme Toggle & Smooth Scroll & Animation Init -->
     <script>
-        // AOS 动画初始化
+        // AOS Animation Init
         document.addEventListener('DOMContentLoaded', () => {
           AOS.init({
-              duration: 800, // 持续时间 0 到 3000, 步长 50ms
-              once: false, // 动画是否只发生一次 - 向下滚动时
-              mirror: false, // 元素滚动经过时是否反向动画
+              duration: 800, // values from 0 to 3000, with step 50ms
+              once: false, // whether animation should happen only once - while scrolling down
+              mirror: false, // whether elements should animate out while scrolling past them
           });
         });
 
-        // 主题切换
+        // Theme Toggle
         const themeToggleBtn = document.getElementById('theme-toggle');
         const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
         const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
@@ -984,25 +971,23 @@ deepsearch:
             applyTheme(newTheme);
         });
 
-        // 平滑滚动 (为粘性标题调整)
+        // Smooth Scroll (adjusted for sticky header)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const href = this.getAttribute('href');
-                // 确保是内部链接且不是 '#'
+                // Ensure it's an internal link and not just '#'
                 if (href && href.startsWith('#') && href.length > 1) {
                      e.preventDefault();
                     const targetId = href;
                     const targetElement = document.querySelector(targetId);
                     const header = document.querySelector('header');
-                    const headerHeight = header ? header.offsetHeight : 80; // 估计标题高度
+                    const headerHeight = header ? header.offsetHeight : 80; // Estimate header height
 
                     if (targetElement) {
-                        // 如果移动菜单打开并被点击，则关闭它
+                        // Close mobile menu if open and clicked
                         const mobileMenu = document.getElementById('mobile-menu');
-                        if (mobileMenu && typeof HSOverlay !== 'undefined' && mobileMenu.classList.contains('hs-overlay-open:translate-x-0')) {
+                        if (mobileMenu && mobileMenu.classList.contains('hs-overlay-open:translate-x-0')) {
                            HSOverlay.close(mobileMenu);
-                           // Preline close might need a slight delay for animation completion before scroll
-                           // setTimeout(() => { /* scroll logic */ }, 100);
                         }
 
                         const elementPosition = targetElement.getBoundingClientRect().top;
@@ -1013,24 +998,24 @@ deepsearch:
                             behavior: 'smooth'
                         });
 
-                        // 可选: 更新 URL 哈希而不跳转
+                        // Optional: Update URL hash without jumping
                         // history.pushState(null, null, targetId);
                     }
                 } else if (href === '#') {
-                    // 阻止 href="#" 链接的跳转
+                    // Prevent jump for href="#" links
                     e.preventDefault();
                      window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             });
         });
 
-        // 修复 Preline 手风琴在初始加载/动态内容后大小不正确的问题
-        // 对于这个静态页面不一定严格需要，但如果内容发生变化是好的实践
+        // Fix Preline accordions not resizing correctly after initial load/dynamic content
+        // Not strictly necessary for this static page, but good practice if content changes
         /*
         if (window.HSStaticMethods) {
-            setTimeout(() => { // 允许初始渲染
+            setTimeout(() => { // Allow initial render
                  HSStaticMethods.autoInit(['accordion']);
-                 // 如果需要，重新评估手风琴大小
+                 // Re-evaluate accordion sizes if needed
                  document.querySelectorAll('.hs-accordion.active').forEach(acc => {
                      const content = document.getElementById(acc.getAttribute('aria-controls'));
                      if (content) {
