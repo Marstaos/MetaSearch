@@ -1,0 +1,49 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+
+on:
+  push:
+    # 改为你实际存放 index.html 的分支（重要！）
+    branches: ["MetaSearch-open"]  # 原配置中的 "MetaSearch-open" 如果不用请修改
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 新增：禁用 Jekyll 渲染（防止某些文件被忽略）
+      - name: Disable Jekyll
+        run: touch .nojekyll  # 在根目录创建空白文件
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # 上传整个仓库（包含根目录的 index.html）
+          path: '.'  # 已经正确，保持不动
+
+          # 新增：显式设置忽略规则（可选）
+          # 如果项目中有.gitignore可能忽略html文件，可以添加：
+          retention-days: 1  # 制品保留天数（可选优化）
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
