@@ -1,7 +1,7 @@
 # 🔍 MetaSearch - 深度迭代检索增强系统
 
-![RAG Architecture](docs/images/system_arch.png) <!-- 建议添加架构示意图 -->
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 🌟 欢迎你！
 MetaSearch是一个教学项目！它可以帮助你学习如何运用大语言模型接口搭建一套先进的检索增强生成系统。本项目的架构设计、代码实现均遵从开源社区的最佳实践，帮助你深入理解RAG技术的核心原理、规范大语言模型项目的构建思路。
@@ -73,8 +73,8 @@ graph TD
 
 想要深入了解MetaSearch的技术细节？我们为你准备了丰富的学习资源：
 
-- 📖 [技术原理详解](docs/technical_report.md) - 深度迭代检索算法的理论基础
-- 🎓 [代码导读](docs/code_walkthrough.md) - 核心模块实现思路与最佳实践
+- 📖 [MetaSearch技术报告](docs\MetaSearch技术报告.md) - 深度迭代检索算法的理论基础
+- 🎓 [代码导读](docs\代码导读.md) - 核心模块实现思路与最佳实践
 
 ## 🤝 加入社区
 
