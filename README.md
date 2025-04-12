@@ -73,8 +73,8 @@ graph TD
 
 想要深入了解MetaSearch的技术细节？我们为你准备了丰富的学习资源：
 
-- 📖 [MetaSearch技术报告](docs\MetaSearch技术报告.md) - 深度迭代检索算法的理论基础
-- 🎓 [代码导读](docs\代码导读.md) - 核心模块实现思路与最佳实践
+- 📖 [MetaSearch技术报告](docs/MetaSearch技术报告.md) - 深度迭代检索算法的理论基础
+- 🎓 [代码导读](docs/代码导读.md) - 核心模块实现思路与最佳实践
 
 ## 🤝 加入社区
 
