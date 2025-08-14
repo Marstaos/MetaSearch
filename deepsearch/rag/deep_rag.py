@@ -3,6 +3,9 @@ import logging
 from typing import List, Dict, Tuple, Optional, Any, Set
 import time
 
+# Agent系统导入
+from deepsearch.agents import AgentCoordinator, get_agent_logger
+
 # 设置日志
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -12,7 +15,7 @@ with open('config/config.yaml', 'r', encoding='utf-8') as f:
     config = yaml.safe_load(f)
 
 class DeepRAG:
-    """深度RAG实现类"""
+    """深度RAG实现类 - 支持传统模式和Agent模式"""
     
     def __init__(
         self, 
@@ -21,7 +24,8 @@ class DeepRAG:
         query_expander=None,
         max_iterations: Optional[int] = None,
         growth_rate_threshold: Optional[float] = None,
-        extend_query_num: Optional[int] = None
+        extend_query_num: Optional[int] = None,
+        use_agent_mode: bool = True  # 新增：是否使用Agent模式
     ):
         """初始化深度RAG
         
@@ -32,18 +36,29 @@ class DeepRAG:
             max_iterations: 最大迭代次数
             growth_rate_threshold: 信息增长率阈值
             extend_query_num: 扩展查询数量
+            use_agent_mode: 是否使用Agent模式（默认True）
         """
         self.searcher = searcher
         self.llm = llm
         self.query_expander = query_expander
+        self.use_agent_mode = use_agent_mode
         
         # 使用配置文件的默认值
         self.max_iterations = max_iterations or config['deepsearch']['max_iterations']
         self.growth_rate_threshold = growth_rate_threshold or config['deepsearch']['growth_rate_threshold']
         self.extend_query_num = extend_query_num or config['deepsearch']['extend_query_num']
+        
+        # Agent模式初始化
+        if self.use_agent_mode:
+            self.agent_coordinator = AgentCoordinator(searcher, llm, query_expander)
+            self.agent_logger = get_agent_logger()
+            logger.info("Agent RAG 模式已启用")
+        else:
+            self.agent_coordinator = None
+            logger.info("传统 RAG 模式已启用")
     
     def answer(self, query: str) -> str:
-        """深度RAG问答流程
+        """深度RAG问答流程 - 支持Agent模式和传统模式
         
         Args:
             query: 用户查询
@@ -51,9 +66,33 @@ class DeepRAG:
         Returns:
             最终回答
         """
+        if self.use_agent_mode:
+            # 使用Agent模式
+            return self._agent_mode_answer(query)
+        else:
+            # 使用传统模式
+            return self._traditional_mode_answer(query)
+    
+    def _agent_mode_answer(self, query: str) -> str:
+        """Agent模式回答"""
+        logger.info(f"🤖 Agent模式处理查询: {query}")
+        
+        try:
+            # 委托给Agent协调器处理
+            result = self.agent_coordinator.process_query(query)
+            return result
+            
+        except Exception as e:
+            logger.error(f"Agent模式处理失败: {e}")
+            # 降级到传统模式
+            logger.info("降级到传统模式处理")
+            return self._traditional_mode_answer(query)
+    
+    def _traditional_mode_answer(self, query: str) -> str:
+        """传统模式回答（保持原有逻辑）"""
         # 记录开始时间
         start_time = time.time()
-        logger.info(f"开始处理查询: {query}")
+        logger.info(f"📚 传统模式处理查询: {query}")
         
         # 初始化
         sub_queries = [query]  # 初始子查询就是原始查询
@@ -177,3 +216,76 @@ class DeepRAG:
         except Exception as e:
             logger.error(f"标准RAG处理失败: {e}", exc_info=True)
             raise
+    
+    def switch_mode(self, use_agent_mode: bool):
+        """切换操作模式
+        
+        Args:
+            use_agent_mode: True使用Agent模式，False使用传统模式
+        """
+        old_mode = "Agent模式" if self.use_agent_mode else "传统模式"
+        new_mode = "Agent模式" if use_agent_mode else "传统模式"
+        
+        self.use_agent_mode = use_agent_mode
+        
+        if use_agent_mode and not self.agent_coordinator:
+            # 初始化Agent协调器
+            self.agent_coordinator = AgentCoordinator(self.searcher, self.llm, self.query_expander)
+            self.agent_logger = get_agent_logger()
+        
+        logger.info(f"模式已从 {old_mode} 切换到 {new_mode}")
+    
+    def get_system_status(self) -> Dict[str, Any]:
+        """获取系统状态"""
+        status = {
+            'current_mode': 'Agent模式' if self.use_agent_mode else '传统模式',
+            'max_iterations': self.max_iterations,
+            'growth_rate_threshold': self.growth_rate_threshold,
+            'extend_query_num': self.extend_query_num
+        }
+        
+        # 如果是Agent模式，获取Agent状态
+        if self.use_agent_mode and self.agent_coordinator:
+            agent_status = self.agent_coordinator.get_system_status()
+            status['agent_system'] = agent_status
+        
+        return status
+    
+    def get_log_path(self) -> Optional[str]:
+        """获取当前日志文件路径"""
+        if self.use_agent_mode and hasattr(self, 'agent_logger'):
+            return self.agent_logger.get_log_path()
+        return None
+
+
+# 为了向后兼容，创建一个别名
+class AgentDeepRAG(DeepRAG):
+    """Agent深度RAG - DeepRAG的Agent模式别名"""
+    
+    def __init__(self, **kwargs):
+        # 强制使用Agent模式
+        kwargs['use_agent_mode'] = True
+        super().__init__(**kwargs)
+
+
+# 便利函数
+def create_agent_rag(searcher, llm, query_expander, **kwargs) -> DeepRAG:
+    """创建Agent模式的DeepRAG实例"""
+    return DeepRAG(
+        searcher=searcher,
+        llm=llm, 
+        query_expander=query_expander,
+        use_agent_mode=True,
+        **kwargs
+    )
+
+
+def create_traditional_rag(searcher, llm, query_expander, **kwargs) -> DeepRAG:
+    """创建传统模式的DeepRAG实例"""
+    return DeepRAG(
+        searcher=searcher,
+        llm=llm,
+        query_expander=query_expander, 
+        use_agent_mode=False,
+        **kwargs
+    )

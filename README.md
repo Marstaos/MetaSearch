@@ -1,17 +1,28 @@
-# 🔍 MetaSearch - 深度迭代检索增强系统
+# 🤖 MetaSearch - Multi-Agent RAG 智能体协作系统
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Agent RAG](https://img.shields.io/badge/Agent-RAG-green.svg)](https://github.com/marstaos/MetaSearch)
 
-## 🌟 欢迎你！
-MetaSearch是一个教学项目！它可以帮助你学习如何运用大语言模型接口搭建一套先进的检索增强生成系统。本项目的架构设计、代码实现均遵从开源社区的最佳实践，帮助你深入理解RAG技术的核心原理、规范大语言模型项目的构建思路。
+## 🌟 欢迎体验下一代RAG！
+MetaSearch已升级为基于Multi-Agent协作的先进RAG系统！通过四大专门智能体协同工作，实现智能规划、精准检索、质量评估和优质生成。这是一个完整的教学项目，帮助你学习最前沿的AI协作模式和RAG技术。
+
+**🚀 最新特性：Agent RAG系统**
+- 🤖 **QueryPlannerAgent**: 智能分析查询复杂度，制定最优检索策略
+- 🔍 **RetrievalAgent**: 执行多种检索策略，自适应调整检索参数
+- 📊 **EvaluatorAgent**: 基于重排序的质量评估，智能决策下一步行动
+- ✍️ **GeneratorAgent**: 整合多轮检索结果，生成高质量答案
+
 在项目官网有更友好的介绍和入门：https://marstaos.github.io/MetaSearch/
 
-## Features
-- 🧩 **模块化RAG系统开发** - 学习如何按照社区通用规范，构建一个大语言模型项目
-- 🔄 **深度迭代检索** - 实现基于目前行业最佳的RAG算法
-- 🎛️ **多模态检索融合** - 深度向量检索、关键词检索和知识图谱检索
-- 📊 **生产级实践** - 项目代码编写规范：配置管理到日志系统的工程化实现
+## ✨ 核心特性
+- 🤖 **Multi-Agent智能体协作** - 四大专门Agent协同工作，实现智能化RAG流程
+- 🧠 **基于重排序的智能评估** - 自主决策检索质量，智能选择下一步行动
+- 📊 **详细日志监控系统** - Agent级别的详细日志，时间戳命名，可追踪每步决策
+- 🔄 **自适应检索策略** - 根据查询复杂度和评估结果动态调整策略
+- ✨ **向后兼容传统模式** - 支持Agent模式和传统模式无缝切换
+- 🎛️ **多模态检索融合** - 向量检索、关键词检索和知识图谱检索
+- 📊 **生产级工程实践** - 规范的代码架构、配置管理和日志系统
 
 ## 🚀 快速开始
 ### 1. 环境配置
@@ -46,7 +57,19 @@ python scripts/process_documents.py --file data/raw/your_document.txt
 python scripts/build_indexes.py --chunks data/processed/index_chunk.pkl
 ```
 
-### 5. 系统启动
+### 5. 体验Agent RAG系统
+
+**🤖 Agent RAG演示**（推荐）：
+```bash
+python demo_agent_rag.py
+```
+
+**🧪 系统测试**：
+```bash
+python test_agent_rag.py
+```
+
+**🚀 传统启动方式**：
 交互模式：
 ```bash
 python app.py --interactive
@@ -76,6 +99,44 @@ graph TD
 
 - 📖 [MetaSearch技术报告](docs/MetaSearch技术报告.md) - 深度迭代检索算法的理论基础
 - 🎓 [代码导读](docs/代码导读.md) - 核心模块实现思路与最佳实践
+
+## 🤖 Agent RAG 技术特色
+
+### 智能体协作流程
+```
+用户查询 → QueryPlannerAgent → RetrievalAgent → EvaluatorAgent → GeneratorAgent
+         ↑                                        ↓
+         ← ← ← ← ← (continue/stop) ← ← ← ← ← ← ← ←
+```
+
+### 核心技术亮点
+
+**🎯 智能规划**: QueryPlannerAgent分析查询复杂度，识别查询类型（事实型、分析型、比较型等），制定最优检索策略。
+
+**🔍 精准检索**: RetrievalAgent支持向量、关键词、混合等多种策略，根据规划结果和轮次动态调整检索参数。
+
+**📊 质量评估**: EvaluatorAgent基于重排序结果进行多维度评估（覆盖度、深度、一致性、新颖性），智能决策下一步行动。
+
+**✍️ 优质生成**: GeneratorAgent整合多轮检索信息，支持详细、简洁、分析等多种生成格式。
+
+**📈 监控日志**: 统一的日志系统，Agent级别的详细记录，支持性能分析和系统优化。
+
+### 使用示例
+
+```python
+from deepsearch.rag.deep_rag import create_agent_rag
+
+# 创建Agent RAG实例
+agent_rag = create_agent_rag(searcher, llm, query_expander)
+
+# 处理查询（Agent模式）
+answer = agent_rag.answer("机器学习中的注意力机制是如何工作的？")
+
+# 查看系统状态
+status = agent_rag.get_system_status()
+print(f"当前模式: {status['current_mode']}")
+print(f"日志文件: {agent_rag.get_log_path()}")
+```
 
 ## 🤝 加入社区
 

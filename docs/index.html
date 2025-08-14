@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MetaSearch - 深度迭代检索增强系统</title>
+    <title>MetaSearch - 深度迭代 Agent RAG 系统</title>
     <!-- TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Preline UI -->
@@ -211,9 +211,9 @@
                 <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 animate-fade-in-up text-shadow dark:text-shadow-dark">
                     <span class="gradient-text">MetaSearch</span>
                 </h1>
-                <p class="text-2xl md:text-3xl font-semibold text-gray-700 dark:text-gray-200 mb-8 opacity-0 animate-fade-in-up" style="animation-delay: 0.2s;">深度迭代检索增强系统</p>
+                <p class="text-2xl md:text-3xl font-semibold text-gray-700 dark:text-gray-200 mb-8 opacity-0 animate-fade-in-up" style="animation-delay: 0.2s;">🤖 Multi-Agent RAG 系统</p>
                 <p class="text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto opacity-0 animate-fade-in-up" style="animation-delay: 0.4s;">
-                    一个教学项目，带你从零开始，利用大语言模型构建一套融合多种先进技术的RAG系统，体验智能信息探索的魅力。
+                    基于智能体协作的下一代RAG系统，四大专门Agent协同工作：智能规划、精准检索、质量评估、优质生成。体验最前沿的AI协作模式。
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4 opacity-0 animate-fade-in-up" style="animation-delay: 0.6s;">
                     <a href="#quickstart" class="btn-primary">
@@ -233,7 +233,7 @@
             <div class="text-center" data-aos="fade-up">
                 <h2 class="section-title">MetaSearch 是什么？</h2>
                 <p class="section-subtitle">
-                    MetaSearch 是一个基于深度迭代检索原理构建的先进检索增强生成 (RAG) 系统。它通过逐步精炼搜索、融合多种检索技术，并利用大语言模型 (LLM) 来提供全面且上下文丰富的答案。
+                    MetaSearch 是一个基于Multi-Agent协作的下一代检索增强生成 (RAG) 系统。通过QueryPlanner、RetrievalAgent、EvaluatorAgent、GeneratorAgent四大智能体协同工作，实现智能规划、精准检索、质量评估和优质生成，提供全面且上下文丰富的答案。
                 </p>
             </div>
         </div>
@@ -302,6 +302,37 @@
                         <h3 class="text-xl font-semibold mt-3 sm:mt-0">多样性重排序</h3>
                     </div>
                     <p class="text-gray-600 dark:text-gray-300">利用最大边际相关性 (MMR) 平衡相关性和多样性，提供更全面的结果。</p>
+                </div>
+
+                <!-- New Agent RAG Features -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="700">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center mb-4">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-robot text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">🚀 Multi-Agent 协作</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">基于智能体协作的RAG系统，规划、检索、评估、生成四大专门Agent协同工作。</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="800">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center mb-4">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-brain text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">🧠 智能质量评估</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">基于重排序的智能评估系统，自主决策下一步行动：深入检索、扩展搜索或生成答案。</p>
+                </div>
+
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="900">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center mb-4">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-chart-bar text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-3 sm:mt-0">📊 详细日志监控</h3>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300">Agent级别的详细日志记录，时间戳命名，每步决策过程可追踪，便于系统优化。</p>
                 </div>
             </div>
         </div>

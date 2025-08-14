@@ -6,3 +6,4 @@ data/
 *.json
 logs/
 *.log
+AGENT_RAG_UPGRADE.md
