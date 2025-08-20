@@ -40,7 +40,7 @@ pip install torch==2.0.1+cu118 --extra-index-url https://download.pytorch.org/wh
 ### 2. 模型下载
 ```bash
 # 推荐选项：下载Embedding和Reranker模型（约2.3GB）
-python scripts/download_models.py --all --skip_qwen
+python scripts/download_models.py --skip_qwen
 
 # 或者，使用全量下载
 python scripts/download_models.py --all
