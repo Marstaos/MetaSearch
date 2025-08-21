@@ -135,6 +135,71 @@
         .dark .flow-chart-container .flow-item:not(:last-child)::after {
             background-color: #4b5563; /* dark:gray-600 */
         }
+        
+        /* 源码选项卡样式 */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Agent卡片样式优化 */
+        .agent-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* 现代化Agent卡片样式 */
+        .agent-modern-card {
+            @apply relative p-6 bg-white dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700/50;
+        }
+        
+        .agent-modern-card:hover {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%);
+        }
+        
+        .dark .agent-modern-card:hover {
+            background: linear-gradient(135deg, rgba(31,41,55,0.9) 0%, rgba(17,24,39,0.9) 100%);
+        }
+        
+        /* Agent流程步骤样式 */
+        .agent-flow-step {
+            @apply relative;
+        }
+        
+        .agent-flow-step::before {
+            content: '';
+            position: absolute;
+            left: 6rem;
+            top: -2rem;
+            height: 2rem;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, #e5e7eb);
+        }
+        
+        .agent-flow-step:first-child::before {
+            display: none;
+        }
+        
+        .dark .agent-flow-step::before {
+            background: linear-gradient(to bottom, transparent, #4b5563);
+        }
+        
+        /* 代码语法高亮优化 */
+        .code-block code {
+            line-height: 1.6;
+            font-family: 'Fira Code', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        
+        /* 复制按钮悬停效果 */
+        .copy-code-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .copy-code-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-950 text-gray-800 dark:text-gray-200 font-sans antialiased">
@@ -151,6 +216,7 @@
             <div class="hidden md:flex space-x-8">
                 <a href="#overview" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">概述</a>
                 <a href="#features" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">特性</a>
+                <a href="#agent-system" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">Agent系统</a>
                 <a href="#architecture" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">架构</a>
                 <a href="#quickstart" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">快速开始</a>
                 <a href="#technical" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium transition duration-150 ease-in-out">技术深潜</a>
@@ -190,6 +256,7 @@
         <div class="p-4 flex flex-col space-y-4">
             <a href="#overview" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">概述</a>
             <a href="#features" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">特性</a>
+            <a href="#agent-system" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">Agent系统</a>
             <a href="#architecture" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">架构</a>
             <a href="#quickstart" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">快速开始</a>
             <a href="#technical" class="block py-2 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hs-overlay-close" data-hs-overlay="#mobile-menu">技术深潜</a>
@@ -235,6 +302,1176 @@
                 <p class="section-subtitle">
                     MetaSearch 是一个基于Multi-Agent协作的下一代检索增强生成 (RAG) 系统。通过QueryPlanner、RetrievalAgent、EvaluatorAgent、GeneratorAgent四大智能体协同工作，实现智能规划、精准检索、质量评估和优质生成，提供全面且上下文丰富的答案。
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Multi-Agent RAG 系统专门部分 -->
+    <section id="agent-system" class="py-20 md:py-28 bg-gradient-to-br from-indigo-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-950 dark:to-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h2 class="section-title">🤖 Multi-Agent RAG 系统</h2>
+                <p class="section-subtitle">
+                    四大智能体协同工作，重新定义RAG系统的智能化水平。从查询规划到答案生成，每个环节都由专门的Agent负责，实现前所未有的智能协作模式。
+                </p>
+            </div>
+
+            <!-- Agent系统架构图 -->
+            <div class="max-w-6xl mx-auto mb-20" data-aos="fade-up" data-aos-delay="100">
+                <div class="card p-8 bg-gradient-to-r from-white to-gray-50 dark:from-gray-800 dark:to-gray-850 border-2 border-primary-100 dark:border-primary-800">
+                    <h3 class="text-2xl font-bold text-center text-gray-900 dark:text-white mb-8">
+                        <i class="fas fa-sitemap text-primary-600 dark:text-primary-400 mr-3"></i>
+                        Agent协作架构图
+                    </h3>
+                    
+                    <!-- 现代化Agent系统展示 -->
+                    <div class="space-y-12">
+                        <!-- 用户输入层 -->
+                        <div class="text-center">
+                            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-xl mb-4 hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-user text-white text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">用户查询</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm">输入问题或需求</p>
+                            <div class="mt-6 flex justify-center">
+                                <div class="px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium">
+                                    "明朝内阁制度的发展历程"
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 流程指示器 -->
+                        <div class="flex justify-center">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                                <div class="w-12 h-0.5 bg-gradient-to-r from-purple-400 to-blue-400"></div>
+                                <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+                                <div class="w-12 h-0.5 bg-gradient-to-r from-blue-400 to-green-400"></div>
+                                <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse" style="animation-delay: 1s"></div>
+                                <div class="w-12 h-0.5 bg-gradient-to-r from-green-400 to-orange-400"></div>
+                                <div class="w-2 h-2 bg-orange-400 rounded-full animate-pulse" style="animation-delay: 1.5s"></div>
+                                <div class="w-12 h-0.5 bg-gradient-to-r from-orange-400 to-red-400"></div>
+                                <div class="w-2 h-2 bg-red-400 rounded-full animate-pulse" style="animation-delay: 2s"></div>
+                            </div>
+                        </div>
+
+                        <!-- Agent协作层级展示 -->
+                        <div class="relative">
+                            <!-- 协作层标题 -->
+                            <div class="text-center mb-8">
+                                <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Multi-Agent 智能协作</h4>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">四大专门智能体并行工作，协同优化</p>
+                            </div>
+
+                            <!-- Agent网格布局 -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+                                <!-- QueryPlannerAgent -->
+                                <div class="agent-modern-card group" data-step="1">
+                                    <div class="absolute -top-2 -right-2 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg">
+                                        1
+                                    </div>
+                                    <div class="flex flex-col items-center text-center">
+                                        <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-110">
+                                            <i class="fas fa-brain text-white text-2xl"></i>
+                                        </div>
+                                        <h4 class="font-bold text-gray-900 dark:text-white mb-2">QueryPlanner</h4>
+                                        <p class="text-xs text-blue-600 dark:text-blue-400 mb-3 font-medium">查询规划智能体</p>
+                                        <div class="space-y-2 text-xs text-gray-600 dark:text-gray-400">
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></div>
+                                                <span>分析查询复杂度</span>
+                                            </div>
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></div>
+                                                <span>制定检索策略</span>
+                                            </div>
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></div>
+                                                <span>决策搜索深度</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs">
+                                            历史分析型 → 深度检索
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- RetrievalAgent -->
+                                <div class="agent-modern-card group" data-step="2">
+                                    <div class="absolute -top-2 -right-2 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg">
+                                        2
+                                    </div>
+                                    <div class="flex flex-col items-center text-center">
+                                        <div class="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-110">
+                                            <i class="fas fa-search text-white text-2xl"></i>
+                                        </div>
+                                        <h4 class="font-bold text-gray-900 dark:text-white mb-2">RetrievalAgent</h4>
+                                        <p class="text-xs text-green-600 dark:text-green-400 mb-3 font-medium">检索执行智能体</p>
+                                        <div class="space-y-2 text-xs text-gray-600 dark:text-gray-400">
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-1.5 h-1.5 bg-green-400 rounded-full mr-2"></div>
+                                                <span>多策略检索</span>
+                                            </div>
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-1.5 h-1.5 bg-green-400 rounded-full mr-2"></div>
+                                                <span>动态参数调整</span>
+                                            </div>
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-1.5 h-1.5 bg-green-400 rounded-full mr-2"></div>
+                                                <span>轮次自适应</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-xs">
+                                            156个候选结果
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- EvaluatorAgent -->
+                                <div class="agent-modern-card group" data-step="3">
+                                    <div class="absolute -top-2 -right-2 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg">
+                                        3
+                                    </div>
+                                    <div class="flex flex-col items-center text-center">
+                                        <div class="w-20 h-20 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-110">
+                                            <i class="fas fa-chart-line text-white text-2xl"></i>
+                                        </div>
+                                        <h4 class="font-bold text-gray-900 dark:text-white mb-2">EvaluatorAgent</h4>
+                                        <p class="text-xs text-orange-600 dark:text-orange-400 mb-3 font-medium">质量评估智能体</p>
+                                        <div class="space-y-2 text-xs text-gray-600 dark:text-gray-400">
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-1.5 h-1.5 bg-orange-400 rounded-full mr-2"></div>
+                                                <span>智能质量评估</span>
+                                            </div>
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-1.5 h-1.5 bg-orange-400 rounded-full mr-2"></div>
+                                                <span>多维度分析</span>
+                                            </div>
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-1.5 h-1.5 bg-orange-400 rounded-full mr-2"></div>
+                                                <span>决策下一步</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded-full text-xs">
+                                            质量85% → 继续检索
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- GeneratorAgent -->
+                                <div class="agent-modern-card group" data-step="4">
+                                    <div class="absolute -top-2 -right-2 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold shadow-lg">
+                                        4
+                                    </div>
+                                    <div class="flex flex-col items-center text-center">
+                                        <div class="w-20 h-20 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-110">
+                                            <i class="fas fa-magic text-white text-2xl"></i>
+                                        </div>
+                                        <h4 class="font-bold text-gray-900 dark:text-white mb-2">GeneratorAgent</h4>
+                                        <p class="text-xs text-red-600 dark:text-red-400 mb-3 font-medium">答案生成智能体</p>
+                                        <div class="space-y-2 text-xs text-gray-600 dark:text-gray-400">
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-1.5 h-1.5 bg-red-400 rounded-full mr-2"></div>
+                                                <span>多轮信息整合</span>
+                                            </div>
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-1.5 h-1.5 bg-red-400 rounded-full mr-2"></div>
+                                                <span>结构化组织</span>
+                                            </div>
+                                            <div class="flex items-center justify-center">
+                                                <div class="w-1.5 h-1.5 bg-red-400 rounded-full mr-2"></div>
+                                                <span>高质量生成</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-full text-xs">
+                                            整合327个信息块
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 协作状态指示 -->
+                            <div class="mt-8 flex justify-center">
+                                <div class="flex items-center space-x-4 px-6 py-3 bg-gradient-to-r from-blue-50 to-red-50 dark:from-blue-900/20 dark:to-red-900/20 rounded-full border border-gray-200 dark:border-gray-700">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                                        <span class="text-xs text-gray-600 dark:text-gray-400">规划中</span>
+                                    </div>
+                                    <div class="w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+                                        <span class="text-xs text-gray-600 dark:text-gray-400">检索中</span>
+                                    </div>
+                                    <div class="w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-orange-400 rounded-full animate-pulse" style="animation-delay: 1s"></div>
+                                        <span class="text-xs text-gray-600 dark:text-gray-400">评估中</span>
+                                    </div>
+                                    <div class="w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-2 h-2 bg-red-400 rounded-full animate-pulse" style="animation-delay: 1.5s"></div>
+                                        <span class="text-xs text-gray-600 dark:text-gray-400">生成中</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 输出结果层 -->
+                        <div class="text-center">
+                            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl shadow-xl mb-4 hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-check-circle text-white text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">智能答案</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">高质量综合回答</p>
+                            <div class="max-w-2xl mx-auto p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border border-emerald-200 dark:border-emerald-700">
+                                <p class="text-sm text-emerald-800 dark:text-emerald-200 leading-relaxed">
+                                    明朝内阁制度起源于永乐年间，经历了从内阁大学士到首辅制度的发展演变，在张居正改革时期达到权力顶峰，成为明朝政治制度的重要组成部分...
+                                </p>
+                                <div class="mt-3 flex justify-center space-x-4 text-xs text-emerald-600 dark:text-emerald-400">
+                                    <span>📊 4轮检索</span>
+                                    <span>📚 327个信息源</span>
+                                    <span>⏱️ 2.3秒响应</span>
+                                    <span>✨ 95%质量评分</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent详细介绍卡片 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- QueryPlannerAgent详细介绍 -->
+                <div class="card p-8 hover:shadow-2xl transition-all duration-300" data-aos="fade-right">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white mr-4 shadow-lg">
+                            <i class="fas fa-brain text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">QueryPlannerAgent</h3>
+                            <p class="text-sm text-blue-600 dark:text-blue-400">查询规划智能体</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">🎯 核心职责</h4>
+                            <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li>• 分析查询类型（事实型、分析型、比较型等）</li>
+                                <li>• 评估查询复杂度和所需信息深度</li>
+                                <li>• 制定最优的检索策略和参数配置</li>
+                                <li>• 预估所需的检索轮次和资源消耗</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">⚡ 智能决策</h4>
+                            <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg text-sm text-gray-700 dark:text-gray-300">
+                                根据查询"明朝内阁制度的发展历程"，Agent识别为<strong>历史分析型</strong>查询，建议使用<strong>深度迭代检索</strong>策略，预计需要<strong>3-5轮</strong>检索。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RetrievalAgent详细介绍 -->
+                <div class="card p-8 hover:shadow-2xl transition-all duration-300" data-aos="fade-left">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white mr-4 shadow-lg">
+                            <i class="fas fa-search text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">RetrievalAgent</h3>
+                            <p class="text-sm text-green-600 dark:text-green-400">检索执行智能体</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">🔍 检索策略</h4>
+                            <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li>• 向量检索：语义相似度匹配</li>
+                                <li>• 关键词检索：精确术语匹配</li>
+                                <li>• 混合检索：策略融合优化</li>
+                                <li>• 自适应参数调整</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">🔄 动态执行</h4>
+                            <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg text-sm text-gray-700 dark:text-gray-300">
+                                第一轮检索返回<strong>156个候选结果</strong>，Agent自动调整参数，第二轮检索发现<strong>43个新信息块</strong>，触发继续检索决策。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EvaluatorAgent详细介绍 -->
+                <div class="card p-8 hover:shadow-2xl transition-all duration-300" data-aos="fade-right" data-aos-delay="100">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center text-white mr-4 shadow-lg">
+                            <i class="fas fa-chart-line text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">EvaluatorAgent</h3>
+                            <p class="text-sm text-orange-600 dark:text-orange-400">质量评估智能体</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">📊 评估维度</h4>
+                            <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li>• 信息覆盖度：是否全面回答问题</li>
+                                <li>• 内容深度：信息的详细程度</li>
+                                <li>• 一致性：信息间的逻辑关联</li>
+                                <li>• 新颖性：新发现信息的价值</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">🎯 智能决策</h4>
+                            <div class="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg text-sm text-gray-700 dark:text-gray-300">
+                                评估结果：覆盖度<strong>85%</strong>，深度<strong>70%</strong>，建议<strong>继续检索</strong>"张居正改革"相关内容以提升信息深度。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GeneratorAgent详细介绍 -->
+                <div class="card p-8 hover:shadow-2xl transition-all duration-300" data-aos="fade-left" data-aos-delay="100">
+                    <div class="flex items-center mb-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center text-white mr-4 shadow-lg">
+                            <i class="fas fa-magic text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">GeneratorAgent</h3>
+                            <p class="text-sm text-red-600 dark:text-red-400">答案生成智能体</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">✨ 生成能力</h4>
+                            <ul class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+                                <li>• 多轮信息整合与去重</li>
+                                <li>• 结构化内容组织</li>
+                                <li>• 逻辑连贯的叙述生成</li>
+                                <li>• 多种输出格式支持</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-2">🏆 优质输出</h4>
+                            <div class="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg text-sm text-gray-700 dark:text-gray-300">
+                                综合<strong>4轮检索</strong>的<strong>327个信息块</strong>，生成结构化答案：起源背景→发展历程→关键人物→历史影响，确保<strong>逻辑完整</strong>且<strong>信息准确</strong>。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent协作时序图 - 详细数据流展示 -->
+            <div class="max-w-6xl mx-auto mt-20" data-aos="fade-up">
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold text-center text-gray-900 dark:text-white mb-8">
+                        <i class="fas fa-exchange-alt text-primary-600 dark:text-primary-400 mr-3"></i>
+                        Agent协作时序图 - 数据流详解
+                    </h3>
+                    
+                    <!-- 用户输入 -->
+                    <div class="mb-8 p-4 bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 rounded-xl border border-purple-200 dark:border-purple-700">
+                        <div class="flex items-center mb-3">
+                            <div class="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3">📥</div>
+                            <h4 class="font-bold text-purple-700 dark:text-purple-300">用户输入</h4>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800/50 p-3 rounded-lg">
+                            <div class="text-sm font-mono text-gray-700 dark:text-gray-300">
+                                <span class="text-purple-600 dark:text-purple-400">query:</span> "明朝内阁制度的发展历程"
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8">
+                        <!-- 步骤1: QueryPlannerAgent -->
+                        <div class="agent-flow-step">
+                            <div class="flex items-start space-x-6">
+                                <!-- Agent图标和标题 -->
+                                <div class="flex-shrink-0">
+                                    <div class="w-12 h-12 bg-blue-500 text-white rounded-xl flex items-center justify-center font-bold mb-2">1</div>
+                                    <div class="text-center">
+                                        <p class="text-xs text-blue-600 dark:text-blue-400 font-medium">QueryPlanner</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- 输入输出详情 -->
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-blue-700 dark:text-blue-300 mb-3 text-lg">
+                                        QueryPlannerAgent - 查询分析与规划
+                                    </h4>
+                                    
+                                    <!-- 输入数据 -->
+                                    <div class="mb-4">
+                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center">
+                                            <i class="fas fa-sign-in-alt text-blue-500 mr-2"></i>输入 (Input)
+                                        </h5>
+                                        <div class="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg">
+                                            <pre class="text-xs font-mono text-gray-700 dark:text-gray-300"><code>{
+    "query": "明朝内阁制度的发展历程"
+}</code></pre>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 处理过程 -->
+                                    <div class="mb-4">
+                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center">
+                                            <i class="fas fa-cog text-blue-500 mr-2"></i>处理过程
+                                        </h5>
+                                        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs">
+                                            <div class="bg-blue-100 dark:bg-blue-800/30 px-2 py-1 rounded">类型识别: analytical</div>
+                                            <div class="bg-blue-100 dark:bg-blue-800/30 px-2 py-1 rounded">复杂度: medium</div>
+                                            <div class="bg-blue-100 dark:bg-blue-800/30 px-2 py-1 rounded">策略: hybrid</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 输出数据 -->
+                                    <div>
+                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center">
+                                            <i class="fas fa-sign-out-alt text-blue-500 mr-2"></i>输出 (Output)
+                                        </h5>
+                                        <div class="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg">
+                                            <pre class="text-xs font-mono text-gray-700 dark:text-gray-300"><code>{
+    "agent": "QueryPlannerAgent",
+    "plan": {
+        "query_type": "analytical",
+        "complexity": "medium",
+        "info_sources_needed": 8,
+        "retrieval_strategy": "hybrid",
+        "multi_round_needed": true,
+        "max_rounds": 3,
+        "sub_queries": ["明朝内阁起源", "内阁大学士", "张居正改革"],
+        "confidence": 0.85
+    },
+    "original_query": "明朝内阁制度的发展历程"
+}</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 数据流箭头 -->
+                        <div class="flex justify-center">
+                            <div class="flex items-center">
+                                <div class="w-4 h-0.5 bg-gradient-to-r from-blue-400 to-green-400"></div>
+                                <i class="fas fa-arrow-down text-green-500 mx-2"></i>
+                                <div class="w-4 h-0.5 bg-gradient-to-r from-blue-400 to-green-400"></div>
+                            </div>
+                        </div>
+
+                        <!-- 步骤2: RetrievalAgent -->
+                        <div class="agent-flow-step">
+                            <div class="flex items-start space-x-6">
+                                <!-- Agent图标和标题 -->
+                                <div class="flex-shrink-0">
+                                    <div class="w-12 h-12 bg-green-500 text-white rounded-xl flex items-center justify-center font-bold mb-2">2</div>
+                                    <div class="text-center">
+                                        <p class="text-xs text-green-600 dark:text-green-400 font-medium">RetrievalAgent</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- 输入输出详情 -->
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-green-700 dark:text-green-300 mb-3 text-lg">
+                                        RetrievalAgent - 检索执行
+                                    </h4>
+                                    
+                                    <!-- 输入数据 -->
+                                    <div class="mb-4">
+                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center">
+                                            <i class="fas fa-sign-in-alt text-green-500 mr-2"></i>输入 (Input)
+                                        </h5>
+                                        <div class="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg">
+                                            <pre class="text-xs font-mono text-gray-700 dark:text-gray-300"><code>{
+    "current_query": "明朝内阁制度的发展历程",
+    "plan": {...},  // QueryPlannerAgent的输出
+    "retrieval_strategy": "hybrid",
+    "top_k": 8,
+    "current_round": 1
+}</code></pre>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 处理过程 -->
+                                    <div class="mb-4">
+                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center">
+                                            <i class="fas fa-cog text-green-500 mr-2"></i>处理过程
+                                        </h5>
+                                        <div class="grid grid-cols-1 md:grid-cols-4 gap-2 text-xs">
+                                            <div class="bg-green-100 dark:bg-green-800/30 px-2 py-1 rounded">向量检索: 156个</div>
+                                            <div class="bg-green-100 dark:bg-green-800/30 px-2 py-1 rounded">关键词检索: 89个</div>
+                                            <div class="bg-green-100 dark:bg-green-800/30 px-2 py-1 rounded">结果融合: 178个</div>
+                                            <div class="bg-green-100 dark:bg-green-800/30 px-2 py-1 rounded">取top-8</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 输出数据 -->
+                                    <div>
+                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center">
+                                            <i class="fas fa-sign-out-alt text-green-500 mr-2"></i>输出 (Output)
+                                        </h5>
+                                        <div class="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg">
+                                            <pre class="text-xs font-mono text-gray-700 dark:text-gray-300"><code>{
+    "agent": "RetrievalAgent",
+    "retrieved_content": "明朝内阁制度始建于永乐年间...",
+    "source_ids": ["doc_1234", "doc_5678", ...],
+    "raw_chunks": [
+        {
+            "content": "永乐年间，明成祖设立内阁...",
+            "chunk_id": "chunk_1234_2",
+            "score": 0.892
+        }, ...
+    ],
+    "search_time": 1.23,
+    "total_chunks": 8
+}</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 数据流箭头 -->
+                        <div class="flex justify-center">
+                            <div class="flex items-center">
+                                <div class="w-4 h-0.5 bg-gradient-to-r from-green-400 to-orange-400"></div>
+                                <i class="fas fa-arrow-down text-orange-500 mx-2"></i>
+                                <div class="w-4 h-0.5 bg-gradient-to-r from-green-400 to-orange-400"></div>
+                            </div>
+                        </div>
+
+                        <!-- 步骤3: EvaluatorAgent -->
+                        <div class="agent-flow-step">
+                            <div class="flex items-start space-x-6">
+                                <!-- Agent图标和标题 -->
+                                <div class="flex-shrink-0">
+                                    <div class="w-12 h-12 bg-orange-500 text-white rounded-xl flex items-center justify-center font-bold mb-2">3</div>
+                                    <div class="text-center">
+                                        <p class="text-xs text-orange-600 dark:text-orange-400 font-medium">EvaluatorAgent</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- 输入输出详情 -->
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-orange-700 dark:text-orange-300 mb-3 text-lg">
+                                        EvaluatorAgent - 质量评估与决策
+                                    </h4>
+                                    
+                                    <!-- 输入数据 -->
+                                    <div class="mb-4">
+                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center">
+                                            <i class="fas fa-sign-in-alt text-orange-500 mr-2"></i>输入 (Input)
+                                        </h5>
+                                        <div class="bg-orange-50 dark:bg-orange-900/20 p-3 rounded-lg">
+                                            <pre class="text-xs font-mono text-gray-700 dark:text-gray-300"><code>{
+    "original_query": "明朝内阁制度的发展历程",
+    "raw_chunks": [...],  // RetrievalAgent的输出
+    "current_round": 1,
+    "max_rounds": 3
+}</code></pre>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 处理过程 -->
+                                    <div class="mb-4">
+                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center">
+                                            <i class="fas fa-cog text-orange-500 mr-2"></i>处理过程
+                                        </h5>
+                                        <div class="grid grid-cols-1 md:grid-cols-4 gap-2 text-xs">
+                                            <div class="bg-orange-100 dark:bg-orange-800/30 px-2 py-1 rounded">重排序: top-5</div>
+                                            <div class="bg-orange-100 dark:bg-orange-800/30 px-2 py-1 rounded">LLM评估</div>
+                                            <div class="bg-orange-100 dark:bg-orange-800/30 px-2 py-1 rounded">质量评分: 0.72</div>
+                                            <div class="bg-orange-100 dark:bg-orange-800/30 px-2 py-1 rounded">决策: 继续检索</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 输出数据 -->
+                                    <div>
+                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center">
+                                            <i class="fas fa-sign-out-alt text-orange-500 mr-2"></i>输出 (Output)
+                                        </h5>
+                                        <div class="bg-orange-50 dark:bg-orange-900/20 p-3 rounded-lg">
+                                            <pre class="text-xs font-mono text-gray-700 dark:text-gray-300"><code>{
+    "agent": "EvaluatorAgent",
+    "reranked_chunks": [...],  // 重排序后的chunks
+    "evaluation_scores": {
+        "coverage": 0.75,
+        "depth": 0.68,
+        "consistency": 0.82,
+        "novelty": 0.65,
+        "overall_quality": 0.725
+    },
+    "decision": {
+        "action": "continue_search",
+        "reason": "信息覆盖不够全面，缺少发展历程细节",
+        "suggested_queries": ["内阁大学士制度", "张居正改革"]
+    }
+}</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 循环指示 -->
+                        <div class="flex justify-center">
+                            <div class="flex items-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-full border-2 border-dashed border-purple-300 dark:border-purple-600">
+                                <i class="fas fa-sync-alt text-purple-500 mr-2 animate-spin"></i>
+                                <span class="text-sm font-medium text-purple-700 dark:text-purple-300">重复步骤2-3，共3轮检索</span>
+                            </div>
+                        </div>
+
+                        <!-- 步骤4: GeneratorAgent -->
+                        <div class="agent-flow-step">
+                            <div class="flex items-start space-x-6">
+                                <!-- Agent图标和标题 -->
+                                <div class="flex-shrink-0">
+                                    <div class="w-12 h-12 bg-red-500 text-white rounded-xl flex items-center justify-center font-bold mb-2">4</div>
+                                    <div class="text-center">
+                                        <p class="text-xs text-red-600 dark:text-red-400 font-medium">GeneratorAgent</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- 输入输出详情 -->
+                                <div class="flex-1">
+                                    <h4 class="font-semibold text-red-700 dark:text-red-300 mb-3 text-lg">
+                                        GeneratorAgent - 答案生成
+                                    </h4>
+                                    
+                                    <!-- 输入数据 -->
+                                    <div class="mb-4">
+                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center">
+                                            <i class="fas fa-sign-in-alt text-red-500 mr-2"></i>输入 (Input)
+                                        </h5>
+                                        <div class="bg-red-50 dark:bg-red-900/20 p-3 rounded-lg">
+                                            <pre class="text-xs font-mono text-gray-700 dark:text-gray-300"><code>{
+    "original_query": "明朝内阁制度的发展历程",
+    "all_retrieved_content": [
+        // 第1轮检索结果
+        // 第2轮检索结果  
+        // 第3轮检索结果
+    ],
+    "plan": {...}  // 原始规划信息
+}</code></pre>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 处理过程 -->
+                                    <div class="mb-4">
+                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center">
+                                            <i class="fas fa-cog text-red-500 mr-2"></i>处理过程
+                                        </h5>
+                                        <div class="grid grid-cols-1 md:grid-cols-4 gap-2 text-xs">
+                                            <div class="bg-red-100 dark:bg-red-800/30 px-2 py-1 rounded">内容整合: 23个</div>
+                                            <div class="bg-red-100 dark:bg-red-800/30 px-2 py-1 rounded">去重排序</div>
+                                            <div class="bg-red-100 dark:bg-red-800/30 px-2 py-1 rounded">结构化组织</div>
+                                            <div class="bg-red-100 dark:bg-red-800/30 px-2 py-1 rounded">LLM生成</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 输出数据 -->
+                                    <div>
+                                        <h5 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 flex items-center">
+                                            <i class="fas fa-sign-out-alt text-red-500 mr-2"></i>输出 (Output)
+                                        </h5>
+                                        <div class="bg-red-50 dark:bg-red-900/20 p-3 rounded-lg">
+                                            <pre class="text-xs font-mono text-gray-700 dark:text-gray-300"><code>{
+    "agent": "GeneratorAgent",
+    "final_answer": "明朝内阁制度的发展历程可以分为...",
+    "generation_metadata": {
+        "total_sources": 23,
+        "generation_time": 3.45,
+        "answer_length": 1247,
+        "confidence_score": 0.91
+    },
+    "source_attribution": [
+        {"source": "doc_1234", "contribution": 0.25},
+        {"source": "doc_5678", "contribution": 0.18},
+        ...
+    ]
+}</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 最终输出 -->
+                    <div class="mt-8 p-4 bg-gradient-to-r from-emerald-50 to-emerald-100 dark:from-emerald-900/30 dark:to-emerald-800/30 rounded-xl border border-emerald-200 dark:border-emerald-700">
+                        <div class="flex items-center mb-3">
+                            <div class="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-sm mr-3">📤</div>
+                            <h4 class="font-bold text-emerald-700 dark:text-emerald-300">最终输出给用户</h4>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800/50 p-4 rounded-lg">
+                            <p class="text-sm text-emerald-800 dark:text-emerald-200 leading-relaxed mb-3">
+                                <strong>明朝内阁制度的发展历程</strong><br>
+                                明朝内阁制度起源于永乐年间，经历了从内阁大学士到首辅制度的演变过程。最初由明成祖设立，用以协助处理政务...
+                            </p>
+                            <div class="flex flex-wrap gap-2 text-xs">
+                                <span class="px-2 py-1 bg-emerald-100 dark:bg-emerald-800/30 text-emerald-700 dark:text-emerald-300 rounded">📊 3轮检索</span>
+                                <span class="px-2 py-1 bg-emerald-100 dark:bg-emerald-800/30 text-emerald-700 dark:text-emerald-300 rounded">📚 23个信息源</span>
+                                <span class="px-2 py-1 bg-emerald-100 dark:bg-emerald-800/30 text-emerald-700 dark:text-emerald-300 rounded">⏱️ 总耗时 8.2秒</span>
+                                <span class="px-2 py-1 bg-emerald-100 dark:bg-emerald-800/30 text-emerald-700 dark:text-emerald-300 rounded">✨ 91%置信度</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Python源码展示区域 -->
+            <div class="max-w-6xl mx-auto mt-20" data-aos="fade-up">
+                <div class="text-center mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                        <i class="fab fa-python text-blue-500 mr-3"></i>
+                        核心源码实现
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        探索MetaSearch Agent系统的核心实现，了解每个智能体的代码架构和关键逻辑
+                    </p>
+                </div>
+
+                <!-- 源码选项卡 -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+                    <!-- Tab Navigation -->
+                    <div class="border-b border-gray-200 dark:border-gray-700">
+                        <nav class="flex space-x-8 px-6 overflow-x-auto" aria-label="Tabs">
+                            <button class="code-tab-btn active py-4 px-1 border-b-2 border-blue-500 font-medium text-sm text-blue-600 dark:text-blue-400 whitespace-nowrap" data-tab="base-agent">
+                                <i class="fas fa-layer-group mr-2"></i>BaseAgent
+                            </button>
+                            <button class="code-tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap" data-tab="planner-agent">
+                                <i class="fas fa-brain mr-2"></i>QueryPlanner
+                            </button>
+                            <button class="code-tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap" data-tab="retrieval-agent">
+                                <i class="fas fa-search mr-2"></i>RetrievalAgent
+                            </button>
+                            <button class="code-tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap" data-tab="evaluator-agent">
+                                <i class="fas fa-chart-line mr-2"></i>EvaluatorAgent
+                            </button>
+                            <button class="code-tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 hover:border-gray-300 whitespace-nowrap" data-tab="generator-agent">
+                                <i class="fas fa-magic mr-2"></i>GeneratorAgent
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div class="p-6">
+                        <!-- BaseAgent Source Code -->
+                        <div id="base-agent" class="tab-content active">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-layer-group text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 dark:text-white">BaseAgent - 基础智能体类</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">deepsearch/agents/base_agent.py</p>
+                                    </div>
+                                </div>
+                                <button class="copy-code-btn px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" data-code="base-agent-code">
+                                    <i class="fas fa-copy mr-1"></i>复制
+                                </button>
+                            </div>
+                            <div class="relative">
+                                <pre class="code-block" id="base-agent-code"><code class="language-python">"""
+Agent RAG 基础智能体类
+
+定义了所有Agent的基础接口和通用功能
+"""
+
+import time
+from abc import ABC, abstractmethod
+from typing import Dict, List, Any, Optional
+from .logger import get_agent_logger
+
+class BaseAgent(ABC):
+    """所有Agent的基础类"""
+    
+    def __init__(self, name: str, llm=None, tools: List = None, **kwargs):
+        """初始化基础Agent
+        
+        Args:
+            name: Agent名称
+            llm: 大语言模型接口
+            tools: 可用工具列表
+            **kwargs: 其他配置参数
+        """
+        self.name = name
+        self.llm = llm
+        self.tools = tools or []
+        self.config = kwargs
+        
+        # 获取统一日志器
+        self.logger = get_agent_logger()
+        
+        # Agent状态
+        self.is_active = False
+        self.memory = []  # Agent记忆
+        self.execution_count = 0
+        
+        # 性能统计
+        self.performance_stats = {
+            'total_executions': 0,
+            'total_execution_time': 0.0,
+            'average_execution_time': 0.0,
+            'last_execution_time': 0.0,
+            'success_count': 0,
+            'error_count': 0
+        }
+    
+    @abstractmethod 
+    def execute(self, task: Dict) -> Dict:
+        """执行任务的核心方法 - 必须由子类实现
+        
+        Args:
+            task: 任务参数字典
+            
+        Returns:
+            执行结果字典
+        """
+        pass
+    
+    def log_step(self, step: str, details: str = None):
+        """记录执行步骤"""
+        message = f"[{self.name}] {step}"
+        if details:
+            message += f" - {details}"
+        self.logger.info(message)</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- QueryPlannerAgent Source Code -->
+                        <div id="planner-agent" class="tab-content hidden">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-brain text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 dark:text-white">QueryPlannerAgent - 查询规划智能体</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">deepsearch/agents/planner_agent.py</p>
+                                    </div>
+                                </div>
+                                <button class="copy-code-btn px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" data-code="planner-agent-code">
+                                    <i class="fas fa-copy mr-1"></i>复制
+                                </button>
+                            </div>
+                            <div class="relative">
+                                <pre class="code-block" id="planner-agent-code"><code class="language-python">"""
+查询规划智能体 (QueryPlannerAgent)
+
+负责分析用户查询，制定检索策略和执行计划
+"""
+
+import json
+import re
+from typing import Dict, List, Any
+from .base_agent import BaseAgent
+
+class QueryPlannerAgent(BaseAgent):
+    """查询规划智能体 - 分析查询复杂度并制定检索策略"""
+    
+    def __init__(self, name: str = "QueryPlannerAgent", **kwargs):
+        super().__init__(name, **kwargs)
+        
+        # 查询类型模式匹配
+        self.query_patterns = {
+            'factual': [
+                r'什么是', r'谁是', r'哪里', r'何时', r'定义', r'概念',
+                r'what is', r'who is', r'where', r'when', r'definition'
+            ],
+            'analytical': [
+                r'为什么', r'如何', r'怎样', r'原因', r'分析', r'解释',
+                r'why', r'how', r'analyze', r'explain', r'reason'
+            ],
+            'comparative': [
+                r'比较', r'对比', r'区别', r'不同', r'相同', r'优缺点',
+                r'compare', r'difference', r'similarity', r'vs', r'versus'
+            ]
+        }
+    
+    def execute(self, task: Dict) -> Dict:
+        """执行查询规划任务"""
+        query = task.get('query', '')
+        
+        self.log_step("开始分析用户查询")
+        
+        # 基础查询分析
+        basic_analysis = self._analyze_query_basic(query)
+        self.log_step("基础分析完成", 
+                     f"长度={basic_analysis['length']}, 词数={basic_analysis['word_count']}")
+        
+        # 查询类型识别
+        query_type = self._identify_query_type(query)
+        self.log_step("查询类型识别", f"类型={query_type}")
+        
+        # 制定检索策略
+        strategy = self._plan_retrieval_strategy(query, query_type, basic_analysis)
+        self.log_step("检索策略制定", 
+                     f"策略={strategy['method']}, 预计轮次={strategy['max_iterations']}")
+        
+        return {
+            'query_analysis': basic_analysis,
+            'query_type': query_type,
+            'retrieval_strategy': strategy,
+            'agent_name': self.name
+        }</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- RetrievalAgent Source Code -->
+                        <div id="retrieval-agent" class="tab-content hidden">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-search text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 dark:text-white">RetrievalAgent - 检索执行智能体</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">deepsearch/agents/retrieval_agent.py</p>
+                                    </div>
+                                </div>
+                                <button class="copy-code-btn px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" data-code="retrieval-agent-code">
+                                    <i class="fas fa-copy mr-1"></i>复制
+                                </button>
+                            </div>
+                            <div class="relative">
+                                <pre class="code-block" id="retrieval-agent-code"><code class="language-python">"""
+检索执行智能体 (RetrievalAgent)
+
+根据规划执行具体的检索任务，支持多种检索策略
+"""
+
+from typing import Dict, List, Any
+from .base_agent import BaseAgent
+
+class RetrievalAgent(BaseAgent):
+    """检索执行智能体 - 执行具体的检索操作"""
+    
+    def __init__(self, name: str = "RetrievalAgent", searcher=None, **kwargs):
+        super().__init__(name, **kwargs)
+        self.searcher = searcher
+        
+        # 检索策略配置
+        self.retrieval_methods = {
+            'vector': self._vector_retrieval,
+            'keyword': self._keyword_retrieval,
+            'hybrid': self._hybrid_retrieval,
+            'adaptive': self._adaptive_retrieval
+        }
+    
+    def execute(self, task: Dict) -> Dict:
+        """执行检索任务"""
+        query = task.get('query', '')
+        strategy = task.get('strategy', {})
+        iteration = task.get('iteration', 1)
+        
+        self.log_step(f"开始第{iteration}轮检索", f"查询: {query[:50]}...")
+        
+        # 根据策略选择检索方法
+        method = strategy.get('method', 'hybrid')
+        retrieval_func = self.retrieval_methods.get(method, self._hybrid_retrieval)
+        
+        # 执行检索
+        results = retrieval_func(query, strategy)
+        
+        # 结果后处理
+        processed_results = self._process_results(results, strategy)
+        
+        self.log_step("检索完成", 
+                     f"找到{len(processed_results)}个结果, "
+                     f"平均相关度{self._calculate_avg_score(processed_results):.3f}")
+        
+        return {
+            'results': processed_results,
+            'iteration': iteration,
+            'method': method,
+            'total_found': len(processed_results),
+            'agent_name': self.name
+        }
+    
+    def _hybrid_retrieval(self, query: str, strategy: Dict) -> List[Dict]:
+        """混合检索：结合向量检索和关键词检索"""
+        # 向量检索
+        vector_results = self.searcher.vector_search(
+            query, 
+            top_k=strategy.get('vector_candidates', 50)
+        )
+        
+        # 关键词检索
+        keyword_results = self.searcher.keyword_search(
+            query,
+            top_k=strategy.get('keyword_candidates', 50)
+        )
+        
+        # 结果融合
+        merged_results = self._merge_results(vector_results, keyword_results)
+        
+        return merged_results[:strategy.get('max_results', 20)]</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- EvaluatorAgent Source Code -->
+                        <div id="evaluator-agent" class="tab-content hidden">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-chart-line text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 dark:text-white">EvaluatorAgent - 质量评估智能体</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">deepsearch/agents/evaluator_agent.py</p>
+                                    </div>
+                                </div>
+                                <button class="copy-code-btn px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" data-code="evaluator-agent-code">
+                                    <i class="fas fa-copy mr-1"></i>复制
+                                </button>
+                            </div>
+                            <div class="relative">
+                                <pre class="code-block" id="evaluator-agent-code"><code class="language-python">"""
+质量评估智能体 (EvaluatorAgent)
+
+评估检索结果质量，决定是否继续检索或生成答案
+"""
+
+import json
+from typing import Dict, List, Any
+from .base_agent import BaseAgent
+
+class EvaluatorAgent(BaseAgent):
+    """质量评估智能体 - 评估信息质量并决策下一步"""
+    
+    def __init__(self, name: str = "EvaluatorAgent", ranker=None, **kwargs):
+        super().__init__(name, **kwargs)
+        self.ranker = ranker
+        
+        # 评估维度权重
+        self.evaluation_weights = {
+            'coverage': 0.25,      # 覆盖度
+            'depth': 0.25,         # 深度
+            'consistency': 0.25,   # 一致性
+            'novelty': 0.25        # 新颖性
+        }
+    
+    def execute(self, task: Dict) -> Dict:
+        """执行质量评估任务"""
+        original_query = task.get('original_query', '')
+        current_results = task.get('current_results', [])
+        accumulated_chunks = task.get('accumulated_chunks', set())
+        iteration = task.get('iteration', 1)
+        max_iterations = task.get('max_iterations', 3)
+        
+        self.log_step(f"开始第{iteration}轮质量评估")
+        
+        # 重排序优化结果
+        if self.ranker and current_results:
+            reranked_results = self._rerank_results(original_query, current_results)
+        else:
+            reranked_results = current_results
+        
+        # 多维度质量评估
+        quality_scores = self._evaluate_quality(
+            original_query, reranked_results, accumulated_chunks
+        )
+        
+        # 决策下一步行动
+        decision = self._make_decision(
+            quality_scores, iteration, max_iterations, accumulated_chunks
+        )
+        
+        self.log_step(f"评估完成", 
+                     f"整体质量={quality_scores['overall']:.3f}, "
+                     f"决策={decision['action']}")
+        
+        return {
+            'reranked_results': reranked_results,
+            'quality_scores': quality_scores,
+            'decision': decision,
+            'iteration': iteration,
+            'agent_name': self.name
+        }</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- GeneratorAgent Source Code -->
+                        <div id="generator-agent" class="tab-content hidden">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-magic text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900 dark:text-white">GeneratorAgent - 答案生成智能体</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">deepsearch/agents/generator_agent.py</p>
+                                    </div>
+                                </div>
+                                <button class="copy-code-btn px-3 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" data-code="generator-agent-code">
+                                    <i class="fas fa-copy mr-1"></i>复制
+                                </button>
+                            </div>
+                            <div class="relative">
+                                <pre class="code-block" id="generator-agent-code"><code class="language-python">"""
+答案生成智能体 (GeneratorAgent)
+
+整合多轮检索结果，生成高质量的综合答案
+"""
+
+from typing import Dict, List, Any
+from .base_agent import BaseAgent
+
+class GeneratorAgent(BaseAgent):
+    """答案生成智能体 - 整合信息并生成最终答案"""
+    
+    def __init__(self, name: str = "GeneratorAgent", **kwargs):
+        super().__init__(name, **kwargs)
+        
+        # 生成模板
+        self.generation_templates = {
+            'factual': "基于检索到的信息，直接回答用户的事实性问题",
+            'analytical': "深入分析检索结果，提供全面的解释和分析",
+            'comparative': "对比不同观点和信息，提供平衡的比较分析",
+            'procedural': "整理步骤信息，提供清晰的操作指南",
+            'comprehensive': "综合所有信息，生成结构化的全面回答"
+        }
+    
+    def execute(self, task: Dict) -> Dict:
+        """执行答案生成任务"""
+        original_query = task.get('original_query', '')
+        final_results = task.get('final_results', [])
+        query_type = task.get('query_type', 'comprehensive')
+        total_iterations = task.get('total_iterations', 1)
+        
+        self.log_step("开始生成最终答案", 
+                     f"基于{len(final_results)}个信息块, {total_iterations}轮检索")
+        
+        # 信息预处理和去重
+        processed_info = self._preprocess_information(final_results)
+        
+        # 结构化组织信息
+        organized_info = self._organize_information(processed_info, query_type)
+        
+        # 生成答案
+        final_answer = self._generate_answer(
+            original_query, organized_info, query_type
+        )
+        
+        # 答案后处理
+        polished_answer = self._polish_answer(final_answer)
+        
+        self.log_step("答案生成完成", f"长度={len(polished_answer)}字符")
+        
+        return {
+            'final_answer': polished_answer,
+            'information_sources': len(final_results),
+            'query_type': query_type,
+            'total_iterations': total_iterations,
+            'agent_name': self.name
+        }</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -949,6 +2186,7 @@ deepsearch:
                     <nav class="flex flex-wrap justify-center md:justify-end space-x-4 text-sm mb-4">
                          <a href="#overview" class="hover:text-primary-400 transition">概述</a>
                          <a href="#features" class="hover:text-primary-400 transition">特性</a>
+                         <a href="#agent-system" class="hover:text-primary-400 transition">Agent系统</a>
                          <a href="#quickstart" class="hover:text-primary-400 transition">快速开始</a>
                          <a href="#technical" class="hover:text-primary-400 transition">技术深潜</a>
                          <a href="#learning" class="hover:text-primary-400 transition">学习路径</a>
@@ -1071,6 +2309,145 @@ deepsearch:
              }, 100);
         }
         */
+
+        // 源码选项卡交互
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching functionality
+            const tabButtons = document.querySelectorAll('.code-tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active', 'border-blue-500', 'text-blue-600', 'dark:text-blue-400');
+                        btn.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+                    });
+                    
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        content.classList.add('hidden');
+                    });
+                    
+                    // Add active class to clicked button and corresponding content
+                    this.classList.add('active', 'border-blue-500', 'text-blue-600', 'dark:text-blue-400');
+                    this.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+                    
+                    const targetContent = document.getElementById(targetTab);
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                        targetContent.classList.remove('hidden');
+                    }
+                });
+            });
+            
+            // Copy code functionality
+            const copyButtons = document.querySelectorAll('.copy-code-btn');
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const codeId = this.getAttribute('data-code');
+                    const codeElement = document.getElementById(codeId);
+                    
+                    if (codeElement) {
+                        const codeText = codeElement.textContent;
+                        
+                        // Modern clipboard API
+                        if (navigator.clipboard && window.isSecureContext) {
+                            navigator.clipboard.writeText(codeText).then(() => {
+                                showCopySuccess(this);
+                            }).catch(err => {
+                                console.error('Failed to copy: ', err);
+                                fallbackCopy(codeText, this);
+                            });
+                        } else {
+                            // Fallback for older browsers
+                            fallbackCopy(codeText, this);
+                        }
+                    }
+                });
+            });
+            
+            function fallbackCopy(text, button) {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    showCopySuccess(button);
+                } catch (err) {
+                    console.error('Fallback copy failed: ', err);
+                }
+                
+                document.body.removeChild(textArea);
+            }
+            
+            function showCopySuccess(button) {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check mr-1"></i>已复制';
+                button.classList.add('bg-green-100', 'dark:bg-green-800', 'text-green-600', 'dark:text-green-300');
+                button.classList.remove('bg-gray-100', 'dark:bg-gray-700', 'text-gray-600', 'dark:text-gray-300');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('bg-green-100', 'dark:bg-green-800', 'text-green-600', 'dark:text-green-300');
+                    button.classList.add('bg-gray-100', 'dark:bg-gray-700', 'text-gray-600', 'dark:text-gray-300');
+                }, 2000);
+            }
+
+            // Agent卡片悬停交互效果
+            const agentCards = document.querySelectorAll('.agent-card');
+            agentCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05) translateY(-5px)';
+                    this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.15)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) translateY(0)';
+                    this.style.boxShadow = '';
+                });
+            });
+
+            // 现代化Agent卡片交互效果
+            const modernAgentCards = document.querySelectorAll('.agent-modern-card');
+            modernAgentCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    // 添加发光效果
+                    this.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(59, 130, 246, 0.1)';
+                    
+                    // 高亮对应的状态指示器
+                    const step = this.getAttribute('data-step');
+                    if (step) {
+                        const statusIndicators = document.querySelectorAll('.animate-pulse');
+                        statusIndicators.forEach((indicator, index) => {
+                            if (index + 1 == step) {
+                                indicator.style.transform = 'scale(1.5)';
+                                indicator.style.boxShadow = '0 0 20px currentColor';
+                            }
+                        });
+                    }
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = '';
+                    
+                    // 恢复状态指示器
+                    const statusIndicators = document.querySelectorAll('.animate-pulse');
+                    statusIndicators.forEach(indicator => {
+                        indicator.style.transform = '';
+                        indicator.style.boxShadow = '';
+                    });
+                });
+            });
+        });
 
     </script>
 </body>

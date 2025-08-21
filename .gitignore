@@ -8,3 +8,4 @@ logs/
 *.log
 AGENT_RAG_UPGRADE.md
 CLAUDE.md
+.DS_Store
